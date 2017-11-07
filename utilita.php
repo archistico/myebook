@@ -22,6 +22,13 @@ function convertiCodiceSeparatore($str) {
   return "ERRORE LUNGHEZZA: ".(strlen($str));
 }
 
+function db2html($stringa) {
+  return utf8_encode($stringa);
+}
+function html2db($stringa) {
+  return utf8_decode($stringa);
+}
+
 function get_client_ip() {
     $ipaddress = '';
     if (getenv('HTTP_CLIENT_IP'))

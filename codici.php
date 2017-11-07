@@ -144,7 +144,7 @@
               $result = $db->query($sql);
               foreach ($result as $row) {
                 $row = get_object_vars($row);
-                print "<option value='" . $row['libroid'] . "'>" . convertiStringaToHTML($row['casaeditrice']." - ".$row['titolo']) . "</option>\n";
+                print "<option value='" . $row['libroid'] . "'>" . db2html($row['casaeditrice']." - ".$row['titolo']) . "</option>\n";
               }
               // chiude il database
               $db = NULL;
@@ -202,6 +202,7 @@
               $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
               $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
               $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
+              $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET CHARACTER SET UTF8');
 
               $sql = 'SELECT codice.*, libro.titolo, libro.casaeditrice, libro.prezzo FROM codice '
               .'INNER JOIN libro ON codice.librofk = libro.libroid '
@@ -211,8 +212,8 @@
               foreach ($result as $row) {
                 $row = get_object_vars($row);
                 print "<tr>\n";
-                print " <td>".$row['denominazione']."</td>\n";
-                print " <td>".$row['casaeditrice']." - ".$row['titolo']."</td>\n";
+                print " <td>".db2html($row['denominazione'])."</td>\n";
+                print " <td>".db2html($row['casaeditrice'])." - ".db2html($row['titolo'])."</td>\n";
                 print " <td class='hidden-xs hidden-sm'>&euro; ".$row['prezzo']."</td>\n";
                 print " <td>".convertiCodiceSeparatore($row['codice'])."</td>\n";
                 print " <td class='hidden-xs hidden-sm'>".$row['download']."</td>\n";
