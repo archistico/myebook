@@ -1,0 +1,16 @@
+body {
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.pull-left {
+  float: left;
+  margin-left: 10px;
+}
+
+.rosso {
+  color: red;
+}
+
+.verde {
+  color: green;
+}
