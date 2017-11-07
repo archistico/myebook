@@ -1,6 +1,6 @@
 <?php
 
 $dbhost = "localhost";
-$dbname = "ebookDB";
+$dbname = "myebook";
 $dbuser = "root";
 $dbpswd = "toor";
