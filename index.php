@@ -1,12 +1,14 @@
-<?php require_once('template/start.php');  ?>
-<?php //include 'menu.php'; ?>
+<?php 
+require_once('template/start.php');
+require_once('utilita.php');
+require_once('template/opencontainer.php');
+//require_once('menu.php'); 
+require_once('template/jumbotron.php');
+require_once('template/pageheader.php'); 
 
-  <div class="container theme-showcase" role="main">
-      <?php require_once('template/jumbotron.php');  
-      Jumbotron::make("Casa editrice Elmi's World", "Download ebook tramite codice");
-      ?>
-      
-      
+Jumbotron::make("Casa editrice Elmi's World", "Download ebook tramite codice");
+?>
+             
       <?php
       // INSERIMENTO
       // TODO: Controllare le stringhe per eventuale apostrofi e convertirli
@@ -14,7 +16,7 @@
       // RECUPERO DATI E AGGIUNGO
       define('CHARSET', 'UTF-8');
       define('REPLACE_FLAGS', ENT_COMPAT | ENT_XHTML);
-      include 'utilita.php';
+      
 
       $errors = array();
       session_start();
@@ -108,30 +110,25 @@
 
       ?>
 
-
-      <div class="page-header">
-        <h1>Cerca ebook</h1>
-      </div>
+      <?php
+      Header::make("Cerca ebook");
+      ?>
+      
       <div class="row">
       <div class="col-md-12">
         <form action="index.php" method="post">
-
-          
             <div class="form-group">
               <label for="Codice">Inserisci il codice</label>
               <input type="text" class="form-control" id="Codice" placeholder="Codice" name="codice" maxlength="25" required>
             </div>
             <input type="hidden" name="formid" value='<?php echo htmlspecialchars($_SESSION["formid"]); ?>'>
             <button type="submit" class="btn btn-info btn-block btn-lg">CERCA</button>
-          
-
         </form>
         </div>
-
       </div>
 
-      <br>
-    </div> <!-- /container -->
-
-<?php require_once('template/script.php');  ?>
-<?php require_once('template/end.php');  ?>
+<?php 
+require_once('template/closecontainer.php');
+require_once('template/script.php');  
+require_once('template/end.php');  
+?>
