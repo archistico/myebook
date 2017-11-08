@@ -53,7 +53,7 @@ if (!empty($_POST['codice'])) {
               $codice
               );
         } else {
-          echo "<div class='alert alert-danger alert-dismissible'><h4><i class='icon fa fa-ban'></i> ATTENZIONE!</h4>Codice non trovato</div>";
+          TemplateHTML::makeAlert("ATTENZIONE!","Codice non trovato");
           inserisciLog("Codice non trovato", $codice, 0, 0);
         }
       }
@@ -63,11 +63,11 @@ if (!empty($_POST['codice'])) {
       throw new PDOException("Error  : " . $e->getMessage());
     }
   } else {
-    echo "<div class='alert alert-danger alert-dismissible'><h4><i class='icon fa fa-ban'></i> ATTENZIONE!</h4>Codice non valido</div>";
+    TemplateHTML::makeAlert("ATTENZIONE!","Codice non valido");
     inserisciLog("Codice non valido", str_replace("'", "''",$_POST['codice']), 0, 0);
   }
   if (!empty($errors)) {
-    echo "<div class='alert alert-danger alert-dismissible'><h4><i class='icon fa fa-ban'></i> ATTENZIONE!</h4>Ci sono degli errori</div>";
+    TemplateHTML::makeAlert("ATTENZIONE!","Ci sono degli errori");
   }
 }
 

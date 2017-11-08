@@ -106,4 +106,16 @@ class TemplateHTML {
             echo "</div>";
         }            
     }
+
+    public static function makeAlert($titolo, $messaggio) {
+        $html = "
+        <div class='alert alert-danger alert-dismissible'>
+            <h4>
+                <i class='icon fa fa-ban'></i> $titolo
+            </h4>
+            $messaggio
+        </div>
+        ";
+        echo $html;
+    }
 }
