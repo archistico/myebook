@@ -4,11 +4,10 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  
   <title>Download Ebook - Elmi's World</title>
-
-  <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  
+  <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
   <link href="css/stile.css" rel="stylesheet">
 </head>
@@ -133,20 +132,20 @@
         <h1>Cerca ebook</h1>
       </div>
       <div class="row">
-
+      <div class="col-md-12">
         <form action="index.php" method="post">
 
-          <div class="col-md-12">
+          
             <div class="form-group">
               <label for="Codice">Inserisci il codice</label>
               <input type="text" class="form-control" id="Codice" placeholder="Codice" name="codice" maxlength="25" required>
             </div>
             <input type="hidden" name="formid" value='<?php echo htmlspecialchars($_SESSION["formid"]); ?>'>
             <button type="submit" class="btn btn-info btn-block btn-lg">CERCA</button>
-          </div>
+          
 
         </form>
-
+        </div>
 
       </div>
 
@@ -160,9 +159,8 @@
 
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
   </body>
   </html>
