@@ -1,31 +1,12 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <title>Download Ebook - Elmi's World</title>
-  
-  <link href="vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-  <link href="css/stile.css" rel="stylesheet">
-</head>
-<body>
-
-
-
-  <!-- Fixed navbar -->
-  <?php //include 'menu.php'; ?>
+<?php require_once('template/start.php');  ?>
+<?php //include 'menu.php'; ?>
 
   <div class="container theme-showcase" role="main">
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <h1>Casa editrice Elmi's World</h1>
-      <p>Download ebook tramite codice<p>
-      </div>
-
+      <?php require_once('template/jumbotron.php');  
+      Jumbotron::make("Casa editrice Elmi's World", "Download ebook tramite codice");
+      ?>
+      
+      
       <?php
       // INSERIMENTO
       // TODO: Controllare le stringhe per eventuale apostrofi e convertirli
@@ -152,15 +133,5 @@
       <br>
     </div> <!-- /container -->
 
-
-
-
-
-
-
-
-    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-    <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/bootstrap.min.js"></script>
-  </body>
-  </html>
+<?php require_once('template/script.php');  ?>
+<?php require_once('template/end.php');  ?>
