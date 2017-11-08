@@ -65,5 +65,8 @@ function inserisciLog($descrizione_log, $codice_log, $download_log, $login_log) 
   }
 }
 
+class Logger {
+  
+}
 
 ?>
