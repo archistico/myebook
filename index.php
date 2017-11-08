@@ -7,7 +7,7 @@ session_start();
 // Caricamento template html
 require_once('template/templatehtml.php');
 
-TemplateHTML::makeHead("Download Ebook - Elmi's World");
+TemplateHTML::HEAD("Download Ebook - Elmi's World");
 TemplateHTML::OPENCONTAINER();
 
 // Caricamento classi entità
@@ -16,8 +16,8 @@ require_once('classi/codice.php');
 // Caricamento utilita
 require_once('utilita.php');
 
-TemplateHTML::makeJumbotron("Casa editrice Elmi's World", "Download ebook tramite codice");
-TemplateHTML::makeMenu();
+TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Download ebook tramite codice");
+TemplateHTML::MENU();
 
 // TODO: Controllare le stringhe per eventuale apostrofi e convertirli
 // RECUPERO DATI E AGGIUNGO
@@ -44,7 +44,7 @@ if (!empty($_POST['codice'])) {
         $row = get_object_vars($row);
         if($codice==$row['codice']){
           inserisciLog("Pagina scaricamento ebook", $codice, 0, 1);
-          TemplateHTML::makeDownloadEbook(
+          TemplateHTML::DOWNLOAD_EBOOK(
               $row['casaeditrice'], 
               $row['titolo'], 
               $row['autore'], 
@@ -58,7 +58,7 @@ if (!empty($_POST['codice'])) {
               $codice
               );
         } else {
-          TemplateHTML::makeAlert("ATTENZIONE!","Codice non trovato");
+          TemplateHTML::ALERT("ATTENZIONE!","Codice non trovato");
           inserisciLog("Codice non trovato", $codice, 0, 0);
         }
       }
@@ -68,20 +68,20 @@ if (!empty($_POST['codice'])) {
       throw new PDOException("Error  : " . $e->getMessage());
     }
   } else {
-    TemplateHTML::makeAlert("ATTENZIONE!","Codice non valido");
+    TemplateHTML::ALERT("ATTENZIONE!","Codice non valido");
     inserisciLog("Codice non valido", str_replace("'", "''",$_POST['codice']), 0, 0);
   }
   if (!empty($errors)) {
-    TemplateHTML::makeAlert("ATTENZIONE!","Ci sono degli errori");
+    TemplateHTML::ALERT("ATTENZIONE!","Ci sono degli errori");
   }
 }
 
 // Aggiungi form cerca ebook
-TemplateHTML::makeHeader("Cerca ebook");
-TemplateHTML::makeFormSearchCodice(htmlspecialchars($_SESSION["formid"]));
+TemplateHTML::HEADER("Cerca ebook");
+TemplateHTML::FORM_CERCA_CODICE(htmlspecialchars($_SESSION["formid"]));
 
 // Elementi di chiusura
 TemplateHTML::CLOSECONTAINER();
-TemplateHTML::makeScript(True); 
+TemplateHTML::SCRIPT(True); 
 TemplateHTML::END(); 
-?>
+

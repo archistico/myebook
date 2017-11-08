@@ -2,7 +2,7 @@
 
 class TemplateHTML {
 
-    public static function makeHead($titolo) {
+    public static function HEAD($titolo) {
         $html = "
         <!DOCTYPE html>
         <html lang='it'>
@@ -44,7 +44,7 @@ class TemplateHTML {
         echo $html;
     }
     
-    public static function makeFormSearchCodice($formID) {
+    public static function FORM_CERCA_CODICE($formID) {
         $html = "
         <div class='row'>
         <div class='col-md-12'>
@@ -62,7 +62,7 @@ class TemplateHTML {
         echo $html;
     }
 
-    public static function makeDownloadEbook($casaeditrice, $titolo, $autore, $isbn, $prezzo,
+    public static function DOWNLOAD_EBOOK($casaeditrice, $titolo, $autore, $isbn, $prezzo,
                                             $ip, $data, $download, $codiceid, $nomefile, $codice) {
         $html = "
         <div class='row'>
@@ -102,7 +102,7 @@ class TemplateHTML {
         }
     }
 
-    public static function makeMenu() {
+    public static function MENU() {
         $html = "
         <div class='row'>
         <div class='col-md-12'>
@@ -120,7 +120,7 @@ class TemplateHTML {
       echo $html;
     }
 
-    public static function makeJumbotron($titolo, $sottotitolo) {
+    public static function JUMBOTRON($titolo, $sottotitolo) {
         echo '<div class="jumbotron">';
         if(!empty($titolo)){
             echo "<h1>$titolo</h1>";
@@ -131,7 +131,7 @@ class TemplateHTML {
         echo '</div>';
     }
 
-    public static function makeScript($attivi) {
+    public static function SCRIPT($attivi) {
         if($attivi){
             $html = "
             <script src='vendor/jquery/jquery-3.2.1.min.js'></script>
@@ -142,7 +142,7 @@ class TemplateHTML {
         }
     }
 
-    public static function makeHeader($header) {
+    public static function HEADER($header) {
         if(!empty($header)){
             echo "<div class='page-header'>";
             echo "<h1>$header</h1>";
@@ -150,7 +150,7 @@ class TemplateHTML {
         }            
     }
 
-    public static function makeAlert($titolo, $messaggio) {
+    public static function ALERT($titolo, $messaggio) {
         $html = "
         <div class='alert alert-danger alert-dismissible'>
             <h4>
