@@ -5,7 +5,8 @@
       <a role="button" class="btn btn-secondary" href="codici.php">Codici</a>
       <a role="button" class="btn btn-secondary" href="ebook.php">Ebook</a>
       <a role="button" class="btn btn-secondary" href="accessi.php">Accessi</a>
-      <a role="button" class="btn btn-secondary" href="logout.php">Esci</a>
+      <a role="button" class="btn btn-secondary" href="login.php">Login</a>
+      <a role="button" class="btn btn-secondary" href="logout.php">Logout</a>
     </div>
   </div>
 </div>

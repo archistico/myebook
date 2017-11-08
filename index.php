@@ -1,22 +1,24 @@
 <?php 
 define('CHARSET', 'UTF-8');
 define('REPLACE_FLAGS', ENT_COMPAT | ENT_XHTML);
+$errors = array();
+session_start();
 
 require_once('template/start.php');
 require_once('utilita.php');
 require_once('template/opencontainer.php');
 require_once('template/jumbotron.php');
 require_once('template/pageheader.php'); 
+require_once('template/templatehtml.php');
 
 Jumbotron::make("Casa editrice Elmi's World", "Download ebook tramite codice");
 require_once('menu.php');
 require_once('classi/codice.php'); 
 
+ 
+
 // TODO: Controllare le stringhe per eventuale apostrofi e convertirli
 // RECUPERO DATI E AGGIUNGO
-
-$errors = array();
-session_start();
 // if sono presenti tutti
 if (!empty($_POST['codice'])) {
   if (empty($_POST['codice'])) {
@@ -40,7 +42,7 @@ if (!empty($_POST['codice'])) {
         $row = get_object_vars($row);
         if($codice==$row['codice']){
           inserisciLog("Pagina scaricamento ebook", $codice, 0, 1);
-            Codice::makeDownloadEbook(
+          TemplateHTML::makeDownloadEbook(
               $row['casaeditrice'], 
               $row['titolo'], 
               $row['autore'], 
@@ -73,7 +75,7 @@ if (!empty($_POST['codice'])) {
 }
 
 Header::make("Cerca ebook");
-Codice::makeFormSearch(htmlspecialchars($_SESSION["formid"]));
+TemplateHTML::makeFormSearchCodice(htmlspecialchars($_SESSION["formid"]));
 
 require_once('template/closecontainer.php');
 require_once('template/script.php');  
