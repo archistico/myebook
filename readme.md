@@ -18,3 +18,7 @@ create database myebook;
 quit  
   
 mysql -u root -p'toor' myebook <ebookDB.sql  
+  
+git add .
+git commit -m''
+git config credential.helper store

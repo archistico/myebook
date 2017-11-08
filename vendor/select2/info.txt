@@ -1,0 +1,38 @@
+<link href="path/to/select2.min.css" rel="stylesheet" />
+<script src="path/to/select2.min.js"></script>
+
+<select class="js-example-basic-single" name="state">
+  <option value="AL">Alabama</option>
+    ...
+  <option value="WY">Wyoming</option>
+</select>
+
+// In your Javascript (external .js resource or <script> tag)
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+
+
+
+<select data-tags="true" data-placeholder="Select an option" data-allow-clear="true">
+    ...
+</select>
+
+$("select").select2({
+  tags: "true",
+  placeholder: "Select an option",
+  allowClear: true
+});
+
+
+
+$(".js-example-data-ajax").select2({
+  ajax: {
+    url: "http://example.org/api/test",
+    cache: false
+  }
+});
+
+<select data-ajax--url="http://example.org/api/test" data-ajax--cache="true">
+    ...
+</select>
