@@ -1,6 +1,15 @@
 <?php
 function solonumeri($str) {
-  return filter_var(str_replace(array('+','-'), '', $str), FILTER_SANITIZE_NUMBER_INT);
+  // FILTER_SANITIZE_MAGIC_QUOTES
+  return filter_var(str_replace(array('+','-','_','|','%',';',':','"','\''), '', $str), FILTER_SANITIZE_NUMBER_INT);
+}
+
+function soloNumeriLettere($str) {
+  return preg_replace("/[^a-zA-Z0-9]+/", "", $str);
+}
+
+function codiceValido($str) {
+  return preg_match('/^[a-zA-Z0-9 .\-]+$/i', $str);
 }
 
 function convertiStringaToHTML($stringa) {
