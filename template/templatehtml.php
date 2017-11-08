@@ -58,4 +58,52 @@ class TemplateHTML {
             inserisciLog("Massimo scaricamento raggiunto", $codice, 0, 0);
         }
     }
+
+    public static function makeMenu() {
+        $html = "
+        <div class='row'>
+        <div class='col-md-12'>
+          <div class='btn-group' role='group' aria-label='Menu'>
+            <a role='button' class='btn btn-secondary' href='index.php'>Home</a>
+            <a role='button' class='btn btn-secondary' href='codici.php'>Codici</a>
+            <a role='button' class='btn btn-secondary' href='ebook.php'>Ebook</a>
+            <a role='button' class='btn btn-secondary' href='accessi.php'>Accessi</a>
+            <a role='button' class='btn btn-secondary' href='login.php'>Login</a>
+            <a role='button' class='btn btn-secondary' href='logout.php'>Logout</a>
+          </div>
+        </div>
+      </div>
+      ";
+      echo $html;
+    }
+
+    public static function makeJumbotron($titolo, $sottotitolo) {
+        echo '<div class="jumbotron">';
+        if(!empty($titolo)){
+            echo "<h1>$titolo</h1>";
+        }
+        if(!empty($sottotitolo)){
+            echo "<p>$sottotitolo</p>";
+        }
+        echo '</div>';
+    }
+
+    public static function makeScript($attivi) {
+        if($attivi){
+            $html = "
+            <script src='vendor/jquery/jquery-3.2.1.min.js'></script>
+            <script src='vendor/popper/popper.min.js'></script>
+            <script src='vendor/bootstrap/bootstrap.min.js'></script>
+            ";
+            echo $html;
+        }
+    }
+
+    public static function makeHeader($header) {
+        if(!empty($header)){
+            echo "<div class='page-header'>";
+            echo "<h1>$header</h1>";
+            echo "</div>";
+        }            
+    }
 }

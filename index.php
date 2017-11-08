@@ -7,15 +7,12 @@ session_start();
 require_once('template/start.php');
 require_once('utilita.php');
 require_once('template/opencontainer.php');
-require_once('template/jumbotron.php');
-require_once('template/pageheader.php'); 
+
 require_once('template/templatehtml.php');
 
-Jumbotron::make("Casa editrice Elmi's World", "Download ebook tramite codice");
-require_once('menu.php');
+TemplateHTML::makeJumbotron("Casa editrice Elmi's World", "Download ebook tramite codice");
+TemplateHTML::makeMenu();
 require_once('classi/codice.php'); 
-
- 
 
 // TODO: Controllare le stringhe per eventuale apostrofi e convertirli
 // RECUPERO DATI E AGGIUNGO
@@ -74,10 +71,12 @@ if (!empty($_POST['codice'])) {
   }
 }
 
-Header::make("Cerca ebook");
+// Aggiungi form cerca ebook
+TemplateHTML::makeHeader("Cerca ebook");
 TemplateHTML::makeFormSearchCodice(htmlspecialchars($_SESSION["formid"]));
 
+// Elementi di chiusura
 require_once('template/closecontainer.php');
-require_once('template/script.php');  
+TemplateHTML::makeScript(True); 
 require_once('template/end.php');  
 ?>
