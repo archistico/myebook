@@ -4,15 +4,20 @@ define('REPLACE_FLAGS', ENT_COMPAT | ENT_XHTML);
 $errors = array();
 session_start();
 
-require_once('template/start.php');
-require_once('utilita.php');
-require_once('template/opencontainer.php');
-
+// Caricamento template html
 require_once('template/templatehtml.php');
+
+TemplateHTML::makeHead("Download Ebook - Elmi's World");
+TemplateHTML::OPENCONTAINER();
+
+// Caricamento classi entità
+require_once('classi/codice.php');
+
+// Caricamento utilita
+require_once('utilita.php');
 
 TemplateHTML::makeJumbotron("Casa editrice Elmi's World", "Download ebook tramite codice");
 TemplateHTML::makeMenu();
-require_once('classi/codice.php'); 
 
 // TODO: Controllare le stringhe per eventuale apostrofi e convertirli
 // RECUPERO DATI E AGGIUNGO
@@ -76,7 +81,7 @@ TemplateHTML::makeHeader("Cerca ebook");
 TemplateHTML::makeFormSearchCodice(htmlspecialchars($_SESSION["formid"]));
 
 // Elementi di chiusura
-require_once('template/closecontainer.php');
+TemplateHTML::CLOSECONTAINER();
 TemplateHTML::makeScript(True); 
-require_once('template/end.php');  
+TemplateHTML::END(); 
 ?>
