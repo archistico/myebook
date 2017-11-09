@@ -1,6 +1,6 @@
 <?php
 
-class Codice {
+class CodiceCalcolo {
   private $isbn;
   private $progressivo;
   private $controllo1;

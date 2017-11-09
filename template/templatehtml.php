@@ -121,10 +121,10 @@ class TemplateHTML {
           <div class='btn-group' role='group' aria-label='Menu'>
             <a role='button' class='btn btn-secondary' href='index.php'>Home</a>
             <a role='button' class='btn btn-secondary' href='admin_codici.php'>Codici</a>
-            <a role='button' class='btn btn-secondary' href='ebook.php'>Ebook</a>
-            <a role='button' class='btn btn-secondary' href='accessi.php'>Accessi</a>
+            <a role='button' class='btn btn-secondary' href='admin_libri.php'>Libri</a>
+            <!-- <a role='button' class='btn btn-secondary' href='accessi.php'>Accessi</a>
             <a role='button' class='btn btn-secondary' href='login.php'>Login</a>
-            <a role='button' class='btn btn-secondary' href='logout.php'>Logout</a> 
+            <a role='button' class='btn btn-secondary' href='logout.php'>Logout</a> --> 
           </div>
         </div>
       </div>
@@ -166,7 +166,19 @@ class TemplateHTML {
         $html = "
         <div class='alert alert-danger alert-dismissible'>
             <h4>
-                <i class='icon fa fa-ban'></i> $titolo
+                <i class='fa fa-ban'></i> $titolo
+            </h4>
+            $messaggio
+        </div>
+        ";
+        echo $html;
+    }
+
+    public static function SUCCESS($titolo, $messaggio) {
+        $html = "
+        <div class='alert alert-success alert-dismissible'>
+            <h4>
+                <i class='fa fa-check'></i> $titolo
             </h4>
             $messaggio
         </div>
@@ -178,7 +190,7 @@ class TemplateHTML {
         $html = "
         <div class='row'>
         <div class='col-md-12'>
-            <form action='admin_codice.php' method='post'>
+            <form action='admin_codici.php' method='post'>
                         
             <div class='form-group'>
                 <label for='librofk'>Seleziona il libro</label>
@@ -237,6 +249,89 @@ class TemplateHTML {
             echo " <td>".convertiCodiceSeparatore($cod->codice)."</td>\n";
             echo " <td class='hidden-xs hidden-sm'>".$cod->download."</td>\n";
             echo " <td><a href='ripristina.php?codiceid=".$cod->id."'><i class='fa fa-refresh fa-lg verde'></i></a></td>";
+            echo " <td><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></td>";
+            echo "</tr>";
+        }
+
+        $html = "
+          </tbody>
+        </table>
+        </div>
+        </div>
+        ";
+        echo $html;
+    }
+
+    public static function FORM_NUOVO_LIBRO($formID) {
+        $html = "
+        <div class='row'>
+        <div class='col-md-12'>
+            <form action='admin_libri.php' method='post'>
+                <div class='form-group'>
+                    <label for='Titolo'>Titolo</label>
+                    <input type='text' class='form-control' id='Titolo' placeholder='Titolo' name='titolo' required>
+                </div>
+                <div class='form-group'>
+                    <label for='Autore'>Autore</label>
+                    <input type='text' class='form-control' id='Autore' placeholder='Autore' name='autore' required>
+                </div>
+                <div class='form-group'>
+                    <label for='Casa_Editrice'>Casa Editrice</label>
+                    <input type='text' class='form-control' id='Casa_Editrice' placeholder='Casa Editrice' name='ce' required>
+                </div>
+                <div class='form-group'>
+                    <label for='ISBN'>ISBN</label>
+                    <input type='text' class='form-control' id='ISBN' placeholder='ISBN' name='isbn' required>
+                </div>
+                <div class='form-group'>
+                    <label for='Prezzo'>Prezzo <em>(separatore ',')</em></label>
+                    <input type='number' class='form-control' id='Prezzo' placeholder='Prezzo' step='0.01' max='1000' min='0' name='prezzo' required>
+                </div>
+                <div class='form-group'>
+                    <label for='Nome_file'>Nome file</label>
+                    <input type='text' class='form-control' id='Nome_file' placeholder='Nome file' name='nomefile' required>
+                </div>
+                <div class='form-group'>
+                    <label for='fileToUpload'>Seleziona il file da caricare</label>
+                    <input type='file' name='fileToUpload' id='fileToUpload'>
+                </div>
+                <div class='form-group'>
+                    <input type='hidden' name='formid' value='$formID'>
+                    <button type='submit' class='btn btn-info btn-block btn-lg'>NUOVO</button>
+                </div>
+            </form>
+        </div>
+        </div>
+        ";
+        echo $html;
+    }
+
+    public static function LIST_TABLE_LIBRI($libri) {
+        $html = "
+        <div class='row'>
+        <div class='col-md-12'>
+        <table class='table table-bordered'>
+          <thead>
+            <tr>
+              <th>Titolo</th>
+              <th>Autore</th>
+              <th class='hidden-xs hidden-sm'>ISBN</th>
+              <th>Prezzo</th>
+              <th class='hidden-xs hidden-sm'>Nome file</th>
+              <th class='hidden-xs hidden-sm'>#</th>
+            </tr>
+          </thead>
+          <tbody>
+        ";
+        echo $html;
+
+        foreach ($libri as $lib) {
+            echo "<tr>";
+            echo " <td>$lib->casaeditrice - $lib->titolo</td>";
+            echo " <td>$lib->autore</td>";
+            echo " <td>$lib->isbn</td>";
+            echo " <td>&euro; $lib->prezzo</td>";
+            echo " <td>$lib->nomefile</td>";
             echo " <td><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></td>";
             echo "</tr>";
         }

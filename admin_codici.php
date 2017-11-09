@@ -32,12 +32,9 @@ if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['fo
         $denominazione = str_replace("'", "''",$_POST['denominazione']);
     }
 
-
     if (empty($errors)) {
 
-        // CALCOLA CODICE
-        // IN BASE ALL'LIBROFK TROVA ISBN E NUMERO PROGRESSIVO
-        include 'config.php';
+        require('config.php');
         try {
             $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
@@ -61,7 +58,7 @@ if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['fo
         include 'classecodici.php';
 
         $download = 0;
-        $codice = new Codice($isbn,$progressivo);
+        $codice = new CodiceCalcolo($isbn,$progressivo);
 
         try {
             $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
@@ -69,8 +66,8 @@ if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['fo
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
 
-            $sql = "INSERT INTO codice (codiceid, denominazione, codice, librofk, download) "
-                ."VALUES (NULL, '" . $denominazione . "', '" . $codice->getCodice() . "', '" . $librofk . "', '" . $download ."');";
+            $sql = "INSERT INTO codice (codiceid, denominazione, codice, librofk, download) 
+                    VALUES (NULL, '$denominazione', '" . $codice->getCodice() . "', '$librofk', '$download');";
 
             $db->exec($sql);
             //echo $sql."<br>";
@@ -83,9 +80,9 @@ if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['fo
     }
 
     if (!empty($errors)) {
-        echo "<div class='alert alert-danger alert-dismissible'><h4><i class='icon fa fa-ban'></i> ATTENZIONE!</h4>Ci sono degli errori</div>";
+        TemplateHTML::ALERT("ATTENZIONE!","Ci sono degli errori");
     } else {
-        echo "<div class='alert alert-success alert-dismissible'><h4><i class='icon fa fa-check'></i> OK!</h4>Inserimento riuscito</div>";
+        TemplateHTML::SUCCESS("OK!","Inserimento riuscito");
     }
     unset($_POST);
     $_POST = array();
@@ -93,7 +90,6 @@ if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['fo
 
 // Creo il formid per questa sessione
 $_SESSION["formid"] = md5(rand(0,10000000));
-
 
 TemplateHTML::HEADER("Nuovo codice");
 $libri = new Libri();
@@ -104,7 +100,6 @@ TemplateHTML::HEADER("Lista codici");
 $codici = new Codici();
 $codici->getTuttiCodici();
 TemplateHTML::LIST_TABLE_CODICE($codici->getCodici());
-
 
 // Elementi di chiusura
 TemplateHTML::CLOSECONTAINER();
