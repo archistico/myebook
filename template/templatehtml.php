@@ -174,12 +174,34 @@ class TemplateHTML {
         echo $html;
     }
 
-    public static function FORM_NUOVO_CODICE($formID) {
+    public static function FORM_NUOVO_CODICE($libri, $formID) {
         $html = "
         <div class='row'>
         <div class='col-md-12'>
             <form action='admin_codice.php' method='post'>
-                
+                        
+            <div class='form-group'>
+                <label for='librofk'>Seleziona il libro</label>
+                <select class='form-control' style='width: 100%;' name='librofk' required>
+        ";
+        echo $html;
+
+        foreach ($libri as $lib) {
+            echo "<option value='$lib->id'>$lib->casaeditrice - $lib->titolo</option>";
+        }
+
+        $html = "
+                </select>
+            </div>    
+            <div class='form-group'>
+                <label for='Denominazione'>Denominazione</label>
+                <input type='text' class='form-control' id='Denominazione' placeholder='Denominazione' name='denominazione' required>
+            </div>
+
+            <div class='form-group'>
+                <input type='hidden' name='formid' value='$formID'>
+                <button type='submit' class='btn btn-info btn-block btn-lg'>NUOVO</button>
+            </div>
             </form>
         </div>
         </div>

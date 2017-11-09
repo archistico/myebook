@@ -96,7 +96,9 @@ $_SESSION["formid"] = md5(rand(0,10000000));
 
 
 TemplateHTML::HEADER("Nuovo codice");
-TemplateHTML::FORM_NUOVO_CODICE(htmlspecialchars($_SESSION["formid"]));
+$libri = new Libri();
+$libri->getTuttiLibri();
+TemplateHTML::FORM_NUOVO_CODICE($libri->getLibri(), htmlspecialchars($_SESSION["formid"]));
 
 TemplateHTML::HEADER("Lista codici");
 $codici = new Codici();
