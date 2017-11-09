@@ -63,7 +63,7 @@ class TemplateHTML {
     }
 
     public static function DOWNLOAD_EBOOK($codice, $ip, $data) {
-
+        
         $casaeditrice = $codice->getLibro()->casaeditrice;
         $titolo = $codice->getLibro()->titolo;
         $autore = $codice->getLibro()->autore;

@@ -74,9 +74,6 @@ class Codice
               if($codiceInserito==$row['codice']){
                 Utilita::LOG("Pagina scaricamento ebook", $codiceInserito, 0, 1);
 
-                // metti nelle proprietà i dati richiesti
-                // restituisci true dopo il db close
-
                 $this->id = $row['codiceid'];
                 $this->codice = $row['codice'];
                 $this->denominazione = $row['denominazione'];
@@ -91,20 +88,21 @@ class Codice
                 $libro->prezzo = $row['prezzo'];
                 $libro->nomefile = $row['nomefile'];
 
-                $this->libro = $libro;
-                                
-              } else {
-                  //NON E' STATO TROVATO
-                TemplateHTML::ALERT("ATTENZIONE!","Codice non trovato");
-                Utilita::LOG("Codice non trovato", $codiceInserito, 0, 0);
+                $this->libro = $libro;  
               }
-            }
-            // chiude il database
-            $db = NULL;
-          
+            }          
           } catch (PDOException $e) {
             return false;
           }
           // fine del try
+          
+          // chiude il database
+          $db = NULL;
+          if(!empty($this->getLibro()->id)) {
+              return true;
+          } else {
+              return false;
+          }
+          
     }
 }

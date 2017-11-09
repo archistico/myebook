@@ -25,26 +25,18 @@ if (!empty($_POST['codice'])) {
   } 
 
   if (empty($errors) && !empty($codiceInserito)) {
-    
-    // Entro il codice
-    // Esce il libro
-    
+   
     $codice = new Codice();
-    $codice->getLibroByCodice($codiceInserito);
-
-    TemplateHTML::DOWNLOAD_EBOOK($codice, get_client_ip(), (new DateTime())->format('H:i:s d/m/Y') );
-    
-
+    if($codice->getLibroByCodice($codiceInserito)) {
+      TemplateHTML::DOWNLOAD_EBOOK($codice, get_client_ip(), (new DateTime())->format('H:i:s d/m/Y') );
+    } else {
+      TemplateHTML::ALERT("ATTENZIONE!","Codice non trovato");
+      Utilita::LOG("Codice non trovato", $codiceInserito, 0, 0);
+    }
   } else {
     TemplateHTML::ALERT("ATTENZIONE!","Codice non valido");
     Utilita::LOG("Codice non valido", str_replace("'", "''",$codiceInserito), 0, 0);
   }
-  
-  // SE ERRORI DB - DAI ERRORE GENERICO
-  if (!empty($errors)) {
-    TemplateHTML::ALERT("ATTENZIONE!","Ci sono degli errori");
-  }
-
 } else {
   // SE NON E' STATO INVIATO IL FORM
   $_SESSION["formid"] = md5(rand(0,10000000));
