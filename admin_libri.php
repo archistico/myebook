@@ -12,13 +12,10 @@ require_once('classi/libro.php');
 
 TemplateHTML::HEAD("Download Ebook - Elmi's World");
 TemplateHTML::OPENCONTAINER();
-TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Codici");
 TemplateHTML::MENU();
+TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Libri");
 
-// INSERIMENTO
-// TODO: Controllare le stringhe per eventuale apostrofi e convertirli
-
-// if sono presenti tutti
+// SE FORM INVIATO
 if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['formid']) && $_POST["formid"] == $_SESSION["formid"])) {
     // cancello il formid
     $_SESSION["formid"] = '';
@@ -41,18 +38,10 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
         $ce = str_replace("'", "''",$_POST['ce']);
     }
 
-    include 'utilita.php';
-
     if (empty($_POST['isbn'])) {
         $errors['isbn'] = 'isbn non passato';
     } else {
         $isbn = solonumeri($_POST['isbn']);
-    }
-
-    if (empty($_POST['nomefile'])) {
-        $errors['nomefile'] = 'nomefile non passato';
-    } else {
-        $nomefile = str_replace("'", "''",$_POST['nomefile']);
     }
 
     if (empty($_POST['prezzo'])) {
@@ -61,26 +50,21 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
         $prezzo = str_replace(",", ".",$_POST['prezzo']);
     }
 
+    // Se tutto ok dal form
     if (empty($errors)) {
-        try {
-            include 'config.php';
+        $libro = new Libro();
+        $libro->titolo = $titolo;
+        $libro->autore = $autore;
+        $libro->casaeditrice = $ce;
+        $libro->isbn = $isbn;
+        $libro->prezzo = $prezzo;
+        $libro->nomefile = $libro->calcolaNomeFile();
 
-            $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
-            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-            $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
-
-            $denominazione = trim($cognome . " " . $nome);
-
-            $sql = "INSERT INTO libro (libroid, titolo, autore, casaeditrice, isbn, prezzo, nomefile) 
-                    VALUES (NULL, '$titolo', '$autore', '$ce', '$isbn', '$prezzo', '$nomefile');";
-
-            $db->exec($sql);
-
-            // chiude il database
-            $db = NULL;
-        } catch (PDOException $e) {
-            $errors['database'] = "Errore inserimento nel database";
+        if(!$libro->storeDB()) {
+            $errors['store'] = 'Errore database';
+        } else {
+            // Se ok
+            // poi copio i file nella directory
         }
     }
 
@@ -95,7 +79,6 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
 
 // Creo il formid per questa sessione
 $_SESSION["formid"] = md5(rand(0,10000000));
-
 
 TemplateHTML::HEADER("Nuovo libro");
 TemplateHTML::FORM_NUOVO_LIBRO(htmlspecialchars($_SESSION["formid"]));

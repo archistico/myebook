@@ -116,19 +116,23 @@ class TemplateHTML {
 
     public static function MENU() {
         $html = "
-        <div class='row'>
-        <div class='col-md-12'>
-          <div class='btn-group' role='group' aria-label='Menu'>
-            <a role='button' class='btn btn-secondary' href='index.php'>Home</a>
-            <a role='button' class='btn btn-secondary' href='admin_codici.php'>Codici</a>
-            <a role='button' class='btn btn-secondary' href='admin_libri.php'>Libri</a>
-            <!-- <a role='button' class='btn btn-secondary' href='accessi.php'>Accessi</a>
-            <a role='button' class='btn btn-secondary' href='login.php'>Login</a>
-            <a role='button' class='btn btn-secondary' href='logout.php'>Logout</a> --> 
-          </div>
-        </div>
-      </div>
-      ";
+        <nav class='navbar navbar-expand-lg navbar-light'>
+            <a class='navbar-brand' href='index.php'>Home</a>
+            <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
+                <span class='navbar-toggler-icon'></span>
+            </button>
+            <div class='collapse navbar-collapse' id='navbarNav'>
+                <ul class='navbar-nav'>
+                    <li class='nav-item'><a class='nav-link' href='admin_codici.php'>Codici</a></li>
+                    <li class='nav-item'><a class='nav-link' href='admin_libri.php'>Libri</a></li>
+                    <!-- <li class='nav-item'><a class='nav-link' href='accessi.php'>Accessi</a></li>
+                    <li class='nav-item'><a class='nav-link' href='login.php'>Login</a></li>
+                    <li class='nav-item'><a class='nav-link' href='logout.php'>Logout</a></li> -->
+                </ul>
+            </div>
+        </nav>
+        ";
+
         echo $html;
     }
 
@@ -138,7 +142,7 @@ class TemplateHTML {
             echo "<h1>$titolo</h1>";
         }
         if(!empty($sottotitolo)){
-            echo "<p>$sottotitolo</p>";
+            echo "<h2>$sottotitolo</h2>";
         }
         echo '</div>';
     }
@@ -157,7 +161,7 @@ class TemplateHTML {
     public static function HEADER($header) {
         if(!empty($header)){
             echo "<div class='page-header'>";
-            echo "<h1>$header</h1>";
+            echo "<h4>$header</h4>";
             echo "</div>";
         }
     }
@@ -286,10 +290,6 @@ class TemplateHTML {
                 <div class='form-group'>
                     <label for='Prezzo'>Prezzo <em>(separatore ',')</em></label>
                     <input type='number' class='form-control' id='Prezzo' placeholder='Prezzo' step='0.01' max='1000' min='0' name='prezzo' required>
-                </div>
-                <div class='form-group'>
-                    <label for='Nome_file'>Nome file</label>
-                    <input type='text' class='form-control' id='Nome_file' placeholder='Nome file' name='nomefile' required>
                 </div>
                 <div class='form-group'>
                     <label for='fileToUpload'>Seleziona il file da caricare</label>

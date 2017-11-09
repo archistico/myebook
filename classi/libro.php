@@ -106,6 +106,41 @@ class Libro {
     public function getFilenamemobi() {
         return str_replace("/", "-", $this->getInfo().".mobi");
     }
+
+    public function storeDB() {
+        // Parametri db
+        require('config.php');
+
+        $result = false;
+        try {
+            $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
+
+            $sql = "INSERT INTO libro (libroid, titolo, autore, casaeditrice, isbn, prezzo, nomefile) 
+                    VALUES (NULL, '".html2db($this->titolo)."', '".html2db($this->autore)."', '".html2db($this->casaeditrice)."', '".html2db($this->isbn)."', '$this->prezzo', '$this->nomefile');";
+
+            $db->exec($sql);
+            $result = true;
+        } catch (PDOException $e) {
+            throw new PDOException("Error  : " . $e->getMessage());
+        }
+        // chiude il database
+        $db = NULL;
+        if($result) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public function calcolaNomeFile() {
+        // Parametri db
+        require('config.php');
+        return substr(sha1($this->getInfo().$dbsalt),-10);
+    }
 }
 
 class Libri {

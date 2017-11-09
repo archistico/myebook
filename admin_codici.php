@@ -12,8 +12,8 @@ require_once('classi/libro.php');
 
 TemplateHTML::HEAD("Download Ebook - Elmi's World");
 TemplateHTML::OPENCONTAINER();
-TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Codici");
 TemplateHTML::MENU();
+TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Codici");
 
 // if sono presenti tutti
 if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['formid']) && $_POST["formid"] == $_SESSION["formid"])) {

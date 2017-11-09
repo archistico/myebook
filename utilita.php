@@ -57,9 +57,6 @@ function get_client_ip() {
     return $ipaddress;
 }
 
-class Logger {
-  
-}
 
 class Utilita {
   public static function PARAMETRI() {

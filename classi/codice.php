@@ -93,7 +93,7 @@ class Codice
                 }
             }
         } catch (PDOException $e) {
-            return false;
+            throw new PDOException("Error  : " . $e->getMessage());
         }
         // fine del try
 

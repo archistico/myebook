@@ -18,3 +18,8 @@ body {
 .verde {
   color: green;
 }
+
+.jumbotron {
+  border-radius: 0px;
+  padding: 1rem 2rem;
+}
