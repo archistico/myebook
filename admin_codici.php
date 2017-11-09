@@ -99,11 +99,9 @@ TemplateHTML::HEADER("Nuovo codice");
 TemplateHTML::FORM_NUOVO_CODICE(htmlspecialchars($_SESSION["formid"]));
 
 TemplateHTML::HEADER("Lista codici");
-$codici = [];
-$codici[] = new Codice();
-$codici = [];
-$codici[] = new Codice();
-TemplateHTML::LIST_TABLE_CODICE($codici);
+$codici = new Codici();
+$codici->getTuttiCodici();
+TemplateHTML::LIST_TABLE_CODICE($codici->getCodici());
 
 
 // Elementi di chiusura
