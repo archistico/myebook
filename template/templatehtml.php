@@ -62,8 +62,19 @@ class TemplateHTML {
         echo $html;
     }
 
-    public static function DOWNLOAD_EBOOK($casaeditrice, $titolo, $autore, $isbn, $prezzo,
-                                            $ip, $data, $download, $codiceid, $nomefile, $codice) {
+    public static function DOWNLOAD_EBOOK($codice, $ip, $data) {
+
+        $casaeditrice = $codice->getLibro()->casaeditrice;
+        $titolo = $codice->getLibro()->titolo;
+        $autore = $codice->getLibro()->autore;
+        $isbn = $codice->getLibro()->isbn;
+        $prezzo = $codice->getLibro()->prezzo;
+
+        // Cerca i file sul disco se non ci sono annulla la variabile
+        $pdf = $codice->getLibro()->getPdf();
+        $epub = $codice->getLibro()->getEpub();
+        $mobi = $codice->getLibro()->getMobi();
+
         $html = "
         <div class='row'>
             <div class='col-md-12'>
@@ -71,21 +82,21 @@ class TemplateHTML {
                 <p>Autore: $autore<br>
                     ISBN: $isbn<br>
                     Prezzo: &euro; $prezzo<br><br>
-                    Acquirente: $denominazione<br>
+                    Acquirente: $codice->denominazione<br>
                     IP: $ip<br>
                     Data: $data<br><br>
-                    Numero download: $download/3<br>
+                    Numero download: $codice->download/3<br>
                 </p>
             </div>
         ";
         echo $html;
 
-        if($download<=2) {
+        if($codice->download<=2) {
             $html = "
                 <form action='download.php' method='post'>
                     <div class='col-md-12'>
-                        <input type='hidden' name='codiceid' value='$codiceid'>
-                        <input type='hidden' name='file' value='$nomefile'>
+                        <input type='hidden' name='codiceid' value='$codice->id'>
+                        <input type='hidden' name='file' value='$pdf'>
                         <button type='submit' class='btn btn-info btn-lg'>SCARICA</button>
                     </div>
                 </form>
@@ -98,7 +109,7 @@ class TemplateHTML {
                 <div class='alert alert-danger alert-dismissible'><h4><i class='icon fa fa-ban'></i> Raggiunto il livello massimo di download permessi</h4>contattare info@elmisworld.it per ulteriori informazioni</div>
             ";
             echo $html;
-            inserisciLog("Massimo scaricamento raggiunto", $codice, 0, 0);
+            Utilita::LOG("Massimo scaricamento raggiunto", $codice->codice, 0, 0);
         }
     }
 

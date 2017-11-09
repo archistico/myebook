@@ -57,25 +57,38 @@ function get_client_ip() {
     return $ipaddress;
 }
 
-function inserisciLog($descrizione_log, $codice_log, $download_log, $login_log) {
-  include 'config.php';
-  try {
-    $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-    $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
-    $ip_log = get_client_ip();
-    $sql = "INSERT INTO accesso (accessoid, descrizione, codice, data, ip, download, login) VALUES (NULL, '{$descrizione_log}', '{$codice_log}', CURRENT_TIMESTAMP, '{$ip_log}', '{$download_log}', '{$login_log}');";
-    $db->exec($sql);
-    // chiude il database
-    $db = NULL;
-  } catch (PDOException $e) {
-    echo "Errore nel loggin<br>";
-  }
-}
-
 class Logger {
   
+}
+
+class Utilita {
+  public static function PARAMETRI() {
+    define('CHARSET', 'UTF-8');
+    define('REPLACE_FLAGS', ENT_COMPAT | ENT_XHTML);
+            
+    ini_set('display_errors',1); 
+    error_reporting(E_ALL);
+    
+    $errors = array();
+    session_start();
+  }
+
+  public static function LOG($descrizione_log, $codice_log, $download_log, $login_log) {
+    include 'config.php';
+    try {
+      $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
+      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+      $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+      $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
+      $ip_log = get_client_ip();
+      $sql = "INSERT INTO accesso (accessoid, descrizione, codice, data, ip, download, login) VALUES (NULL, '{$descrizione_log}', '{$codice_log}', CURRENT_TIMESTAMP, '{$ip_log}', '{$download_log}', '{$login_log}');";
+      $db->exec($sql);
+      // chiude il database
+      $db = NULL;
+    } catch (PDOException $e) {
+      echo "Errore nel loggin<br>";
+    }
+  }
 }
 
 ?>
