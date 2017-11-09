@@ -214,8 +214,8 @@ class TemplateHTML {
             echo " <td class='hidden-xs hidden-sm'>&euro; ".$cod->getLibro()->prezzo."</td>\n";
             echo " <td>".convertiCodiceSeparatore($cod->codice)."</td>\n";
             echo " <td class='hidden-xs hidden-sm'>".$cod->download."</td>\n";
-            echo " <td><a href='ripristina.php?codiceid=".$cod->id."'><i class='fa fa-refresh fa-lg'></i></a></td>";
-            echo " <td><i class='fa fa-times fa-lg' aria-hidden='true'></i></td>";
+            echo " <td><a href='ripristina.php?codiceid=".$cod->id."'><i class='fa fa-refresh fa-lg verde'></i></a></td>";
+            echo " <td><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></td>";
             echo "</tr>";
         }
 
