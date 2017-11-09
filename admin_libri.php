@@ -23,19 +23,19 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
     if (empty($_POST['titolo'])) {
         $errors['titolo'] = 'titolo non passato';
     } else {
-        $titolo = str_replace("'", "''",$_POST['titolo']);
+        $titolo = utilita::PULISCISTRINGA($_POST['titolo']);
     }
 
     if (empty($_POST['autore'])) {
         $errors['autore'] = 'autore non passato';
     } else {
-        $autore = str_replace("'", "''",$_POST['autore']);
+        $autore = utilita::PULISCISTRINGA($_POST['autore']);
     }
 
     if (empty($_POST['ce'])) {
         $errors['ce'] = 'casa editrice non passato';
     } else {
-        $ce = str_replace("'", "''",$_POST['ce']);
+        $ce = utilita::PULISCISTRINGA($_POST['ce']);
     }
 
     if (empty($_POST['isbn'])) {

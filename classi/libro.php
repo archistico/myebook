@@ -24,6 +24,7 @@ class Libro {
         return $this->nomefile.".mobi";
     }
 
+    /*
     public function setCasaeditrice($casaeditrice)
     {
         $this->casaeditrice = $casaeditrice;
@@ -89,6 +90,7 @@ class Libro {
     {
         $this->isbn = $isbn;
     }
+    */
 
     public function getInfo()
     {
