@@ -126,7 +126,7 @@ class Libri {
 
     public function getTuttiLibri() {
         // Parametri db
-        require_once('config.php');
+        require('config.php');
 
         try {
 

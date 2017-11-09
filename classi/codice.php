@@ -57,7 +57,7 @@ class Codice
 
     public function getLibroByCodice($codiceInserito) {
         // Parametri db
-        require_once('config.php');
+        require('config.php');
 
         try {
             $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
@@ -126,7 +126,7 @@ class Codici {
 
     public function getTuttiCodici() {
         // Parametri db
-        require_once('config.php');
+        require('config.php');
 
         try {
 
