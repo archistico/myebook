@@ -16,7 +16,10 @@ TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Download ebook tramite co
 TemplateHTML::MENU();
 
 // SE E' STATO INVIATO IL FORM 
-if (!empty($_POST['codice'])) {
+if (!empty($_POST['codice']) && (isset($_POST['formid']) && isset($_SESSION['formid']) && $_POST["formid"] == $_SESSION["formid"])) {
+
+    // cancello il formid
+    $_SESSION["formid"] = '';
 
     $codiceInserito = solonumeri($_POST['codice']);
 

@@ -14,11 +14,11 @@ class Libro {
         return $this->nomefile.".pdf";
     }
 
-     public function getEpub()
+    public function getEpub()
     {
         return $this->nomefile.".epub";
     }
-       
+
     public function getMobi()
     {
         return $this->nomefile.".mobi";
@@ -29,7 +29,7 @@ class Libro {
         $this->casaeditrice = $casaeditrice;
         return $this;
     }
-    
+
     public function getCasaeditrice()
     {
         return $this->casaeditrice;

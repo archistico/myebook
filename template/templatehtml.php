@@ -43,7 +43,7 @@ class TemplateHTML {
         ";
         echo $html;
     }
-    
+
     public static function FORM_CERCA_CODICE($formID) {
         $html = "
         <div class='row'>
@@ -63,7 +63,7 @@ class TemplateHTML {
     }
 
     public static function DOWNLOAD_EBOOK($codice, $ip, $data) {
-        
+
         $casaeditrice = $codice->getLibro()->casaeditrice;
         $titolo = $codice->getLibro()->titolo;
         $autore = $codice->getLibro()->autore;
@@ -128,7 +128,7 @@ class TemplateHTML {
         </div>
       </div>
       ";
-      echo $html;
+        echo $html;
     }
 
     public static function JUMBOTRON($titolo, $sottotitolo) {
@@ -158,7 +158,7 @@ class TemplateHTML {
             echo "<div class='page-header'>";
             echo "<h1>$header</h1>";
             echo "</div>";
-        }            
+        }
     }
 
     public static function ALERT($titolo, $messaggio) {
