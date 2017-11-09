@@ -13,7 +13,8 @@ class TemplateHTML {
 
             <title>$titolo</title>
 
-            <link href='vendor/bootstrap/bootstrap.min.css' rel='stylesheet'>
+            <link rel='stylesheet' href='vendor/bootstrap/bootstrap.min.css'>
+            <link rel='stylesheet' href='vendor/awesome/font-awesome.min.css'>
             <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet'>
             <link href='css/stile.css' rel='stylesheet'>
         </head>
@@ -199,6 +200,7 @@ class TemplateHTML {
               <th>Codice</th>
               <th class='hidden-xs hidden-sm'>Download</th>
               <th>#</th>
+              <th>X</th>
             </tr>
           </thead>
           <tbody>
@@ -212,7 +214,8 @@ class TemplateHTML {
             echo " <td class='hidden-xs hidden-sm'>&euro; ".$cod->getLibro()->prezzo."</td>\n";
             echo " <td>".convertiCodiceSeparatore($cod->codice)."</td>\n";
             echo " <td class='hidden-xs hidden-sm'>".$cod->download."</td>\n";
-            echo " <td><a href='ripristina.php?codiceid=".$cod->id."'><span class='glyphicon glyphicon-refresh verde' aria-hidden='true'></span></a></td>";
+            echo " <td><a href='ripristina.php?codiceid=".$cod->id."'><i class='fa fa-refresh fa-lg'></i></a></td>";
+            echo " <td><i class='fa fa-times fa-lg' aria-hidden='true'></i></td>";
             echo "</tr>";
         }
 
