@@ -119,11 +119,11 @@ class TemplateHTML {
         <div class='col-md-12'>
           <div class='btn-group' role='group' aria-label='Menu'>
             <a role='button' class='btn btn-secondary' href='index.php'>Home</a>
-            <a role='button' class='btn btn-secondary' href='codici.php'>Codici</a>
+            <a role='button' class='btn btn-secondary' href='admin_codici.php'>Codici</a>
             <a role='button' class='btn btn-secondary' href='ebook.php'>Ebook</a>
             <a role='button' class='btn btn-secondary' href='accessi.php'>Accessi</a>
             <a role='button' class='btn btn-secondary' href='login.php'>Login</a>
-            <a role='button' class='btn btn-secondary' href='logout.php'>Logout</a>
+            <a role='button' class='btn btn-secondary' href='logout.php'>Logout</a> 
           </div>
         </div>
       </div>
@@ -168,6 +168,58 @@ class TemplateHTML {
                 <i class='icon fa fa-ban'></i> $titolo
             </h4>
             $messaggio
+        </div>
+        ";
+        echo $html;
+    }
+
+    public static function FORM_NUOVO_CODICE($formID) {
+        $html = "
+        <div class='row'>
+        <div class='col-md-12'>
+            <form action='admin_codice.php' method='post'>
+                
+            </form>
+        </div>
+        </div>
+        ";
+        echo $html;
+    }
+
+    public static function LIST_TABLE_CODICE($codici) {
+        $html = "
+        <div class='row'>
+        <div class='col-md-12'>
+        <table class='table table-bordered'>
+          <thead>
+            <tr>
+              <th>Denominazione</th>
+              <th>Titolo</th>
+              <th class='hidden-xs hidden-sm'>Prezzo</th>
+              <th>Codice</th>
+              <th class='hidden-xs hidden-sm'>Download</th>
+              <th>#</th>
+            </tr>
+          </thead>
+          <tbody>
+        ";
+        echo $html;
+
+        foreach ($codici as $cod) {
+            echo "<tr>";
+            echo " <td>".$cod->denominazione."</td>";
+            echo " <td>".$cod->getLibro()->titolo."</td>";
+            echo " <td class='hidden-xs hidden-sm'>&euro; ".$cod->getLibro()->prezzo."</td>\n";
+            echo " <td>".convertiCodiceSeparatore($cod->codice)."</td>\n";
+            echo " <td class='hidden-xs hidden-sm'>".$cod->download."</td>\n";
+            echo " <td><a href='ripristina.php?codiceid=".$cod->id."'><span class='glyphicon glyphicon-refresh verde' aria-hidden='true'></span></a></td>";
+            echo "</tr>";
+        }
+
+        $html = "
+          </tbody>
+        </table>
+        </div>
         </div>
         ";
         echo $html;
