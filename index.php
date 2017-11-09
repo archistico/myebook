@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Caricamento utilita
 require_once('utilita.php');
 Utilita::PARAMETRI();
@@ -17,35 +17,35 @@ TemplateHTML::MENU();
 
 // SE E' STATO INVIATO IL FORM 
 if (!empty($_POST['codice'])) {
-  
-  $codiceInserito = solonumeri($_POST['codice']);
 
-  if (empty($_POST['codice'])) {
-    $errors['codice'] = 'codice non valido';
-  } 
+    $codiceInserito = solonumeri($_POST['codice']);
 
-  if (empty($errors) && !empty($codiceInserito)) {
-   
-    $codice = new Codice();
-    if($codice->getLibroByCodice($codiceInserito)) {
-      TemplateHTML::DOWNLOAD_EBOOK($codice, get_client_ip(), (new DateTime())->format('H:i:s d/m/Y') );
-    } else {
-      TemplateHTML::ALERT("ATTENZIONE!","Codice non trovato");
-      Utilita::LOG("Codice non trovato", $codiceInserito, 0, 0);
+    if (empty($_POST['codice'])) {
+        $errors['codice'] = 'codice non valido';
     }
-  } else {
-    TemplateHTML::ALERT("ATTENZIONE!","Codice non valido");
-    Utilita::LOG("Codice non valido", str_replace("'", "''",$codiceInserito), 0, 0);
-  }
-} else {
-  // SE NON E' STATO INVIATO IL FORM
-  $_SESSION["formid"] = md5(rand(0,10000000));
 
-  TemplateHTML::HEADER("Cerca ebook");
-  TemplateHTML::FORM_CERCA_CODICE(htmlspecialchars($_SESSION["formid"]));
+    if (empty($errors) && !empty($codiceInserito)) {
+
+        $codice = new Codice();
+        if($codice->getLibroByCodice($codiceInserito)) {
+            TemplateHTML::DOWNLOAD_EBOOK($codice, get_client_ip(), (new DateTime())->format('H:i:s d/m/Y') );
+        } else {
+            TemplateHTML::ALERT("ATTENZIONE!","Codice non trovato");
+            Utilita::LOG("Codice non trovato", $codiceInserito, 0, 0);
+        }
+    } else {
+        TemplateHTML::ALERT("ATTENZIONE!","Codice non valido");
+        Utilita::LOG("Codice non valido", str_replace("'", "''",$codiceInserito), 0, 0);
+    }
+} else {
+    // SE NON E' STATO INVIATO IL FORM
+    $_SESSION["formid"] = md5(rand(0,10000000));
+
+    TemplateHTML::HEADER("Cerca ebook");
+    TemplateHTML::FORM_CERCA_CODICE(htmlspecialchars($_SESSION["formid"]));
 }
 
 // Elementi di chiusura
 TemplateHTML::CLOSECONTAINER();
-TemplateHTML::SCRIPT(True); 
+TemplateHTML::SCRIPT(True);
 TemplateHTML::END(); 
