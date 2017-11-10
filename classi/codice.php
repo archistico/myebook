@@ -198,6 +198,26 @@ class Codice
         }
     }
 
+    public function AddDownload() {
+        // Parametri
+        require('config.php');
+
+        $this->download += 1;
+
+        try {
+            $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
+
+            $sql = "UPDATE codice SET download = '$this->download' WHERE codice.codiceid = $this->id;";
+            $result = $db->query($sql);
+
+        } catch (PDOException $e) {
+            throw new PDOException("Error  : " . $e->getMessage());
+        }
+    }
+
     public function getCodiceSeparatore($separatore) {
         return substr($this->codice, 0, 2).$separatore.
             substr($this->codice, 2, 2).$separatore.

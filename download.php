@@ -57,6 +57,12 @@ if (empty($notices)) {
     $filenameStore = $codice->getLibro()->getCompleteFilenameStore($tipo);
     $filenameDownload = $codice->getLibro()->getFilenameDownload($tipo);
 
+    // AGGIUNTI DOWNLOAD
+    $codice->AddDownload();
+
+    // AGGIUNGI LOG
+    Utilita::LOG("Download", $codice->codice." - ".$codice->getLibro()->titolo , 1, 1);
+
     ob_clean();
     header('Content-Description: File Transfer');
     header('Content-Type: application/octet-stream');
@@ -79,33 +85,10 @@ if (!empty($notices)) {
 
     TemplateHTML::SHOW_NOTICES($notices, "index.php");
 
+    // AGGIUNGI LOG
+
     // Elementi di chiusura
     TemplateHTML::CLOSECONTAINER();
     TemplateHTML::SCRIPT(True);
     TemplateHTML::END();
 }
-
-/*
-
-    // MODIFICA IL VALORE DI DOWNLOAD
-    try {
-        $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-        $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-        $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
-        $sql = "UPDATE codice SET download = '{$download}' WHERE codice.codiceid = {$codiceid};";
-        $db->exec($sql);
-        // chiude il database
-        $db = NULL;
-    } catch (PDOException $e) {
-        echo "Errore DB<br>";
-        echo "<a href='index.php'>Torna indietro</a>";
-        unlink($file);
-        die();
-    }
-
-
-// inserisciLog("Download ebook", $codice, 1, 0);
-
-
-*/
