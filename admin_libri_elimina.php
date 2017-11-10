@@ -36,7 +36,7 @@ if (empty($notices) && !Libro::EXIST($id)) {
 
 // CONTROLLO SE CODICI COLLEGATI
 if(empty($notices) && !Libro::CODICICOLLEGATI($id)) { 
-    $notices[] = 'Codici colleghi, cancellare prima quelli';
+    $notices[] = 'Codici collegati al libro, cancellare prima quelli';
 }
 
 // MOSTRO LA SCELTA
@@ -48,10 +48,17 @@ if(empty($notices) && $ok != 1) {
 
 // SE INVECE HO ACCETTATO
 if(empty($notices) && $ok == 1) {
-    
+
+    $libro = new Libro();
+    $libro->getDataByID($id);
+
     // CANCELLA FILE
+    echo "nomefile: ".$libro->nomefile;
 
     // CANCELLA LIBRO DAL DB
+    if(!Libro::DELETEBYID($id)) {
+        $notices[] = 'Errore nella cancellazione sulla base dati';
+    }
 
     $notices['ok'] = "Libro cancellato"; 
 } 

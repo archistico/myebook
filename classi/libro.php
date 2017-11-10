@@ -169,7 +169,7 @@ class Libro {
             $result = $db->query($sql);
             
             $row = $result->fetch(PDO::FETCH_ASSOC);
-            if($row['numero']>0) {
+            if($row['numero']==0) {
                 $nonlibricollegati = true;
             }
 
@@ -180,6 +180,35 @@ class Libro {
         }
         
         return $nonlibricollegati;
+    }
+
+    public static function DELETEBYID($id) {
+        // Ritorna true se non ha codici collegati
+        $effettuato = false;
+
+        // Parametri
+        require('config.php');
+
+        try {
+            $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
+            $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET CHARACTER SET UTF8');
+
+            $sql = "DELETE FROM libro WHERE libroid = $id";
+
+            if ($db->query($sql) === TRUE) {
+                $effettuato = true;
+            }
+
+            // chiude il database
+            $db = NULL;
+        } catch (PDOException $e) {
+            throw new PDOException("Error  : " . $e->getMessage());
+        }
+
+        return $effettuato;
     }
 
 }
