@@ -2,7 +2,7 @@
 // Caricamento utilita
 require_once('utilita.php');
 Utilita::PARAMETRI();
-$errors = [];
+$notices = [];
 
 // Caricamento template html
 require_once('template/templatehtml.php');
@@ -18,44 +18,45 @@ TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Elimina libro");
 
 // VALIDAZIONE
 if (empty($_GET['id'])) {
-    $errors[] = 'ID non inserito';
+    $notices[] = 'ID non inserito';
 } else {
     $id = Utilita::PULISCISTRINGA($_GET['id']);
 }
 
 if (!isset($_GET['ok'])) {
-    $errors[] = 'Bypass non attivo';
+    $notices[] = 'Bypass non attivo';
 } else {
     $ok = Utilita::PULISCISTRINGA($_GET['ok']);
 }
 
 // CONTROLLO ID ESISTENTE
-if (empty($errors) && !Libro::EXIST($id)) {
-    $errors[] = 'Nessun libro con questo ID';
+if (empty($notices) && !Libro::EXIST($id)) {
+    $notices[] = 'Nessun libro con questo ID';
 }
 
 // CONTROLLO SE CODICI COLLEGATI
-if(empty($errors) && !Libro::CODICICOLLEGATI($id)) { 
-    $errors[] = 'Codici colleghi, cancellare prima quelli';
+if(empty($notices) && !Libro::CODICICOLLEGATI($id)) { 
+    $notices[] = 'Codici colleghi, cancellare prima quelli';
 }
 
 // MOSTRO LA SCELTA
-if(empty($errors) && $ok != 1) {
+if(empty($notices) && $ok != 1) {
     $libro = new Libro();
     $libro->getDataByID($id);
     TemplateHTML::SCELTA("ATTENZIONE! CANCELLARE IL LIBRO?", $libro->getInfo(), "CANCELLA", "admin_libri_elimina.php?id=$id&ok=1", "admin_libri.php");
 } 
 
 // SE INVECE HO ACCETTATO
-if(empty($errors) && $ok == 1) {
+if(empty($notices) && $ok == 1) {
     
     // CANCELLA FILE
 
     // CANCELLA LIBRO DAL DB
 
+    $notices['ok'] = "Libro cancellato"; 
 } 
 
-TemplateHTML::SHOW_NOTICE($errors, "Libro cancellato", "admin_libri.php");
+TemplateHTML::SHOW_NOTICES($notices, "admin_libri.php");
 
 // Elementi di chiusura
 TemplateHTML::CLOSECONTAINER();

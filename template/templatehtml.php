@@ -201,19 +201,25 @@ class TemplateHTML {
         echo $html;
     }
 
-    public static function SHOW_NOTICE($errors, $OKmessaggio = "", $linkback = "") {
-        if(!empty($errors)) {
-            foreach($errors as $err) {
-                self::ALERT("ATTENZIONE!", $err);
+    public static function SHOW_NOTICES($notices, $linkback="") {
+        // Controllo se c'è il success
+        if(!empty($notices['ok'])) {
+            self::SUCCESS("OK!", $notices['ok']);
+            $notices=[];
+            if(!empty($linkback)) {
+                self::BUTTON("Torna indietro", $linkback);
+            }
+        }
+
+        // Se ci sono errori
+        if(!empty($notices)) {
+            foreach($notices as $notice) {
+                self::ALERT("ATTENZIONE!", $notice);
+            }
+            if(!empty($linkback)) {
+                self::BUTTON("Torna indietro", $linkback);
             }    
-        } else {
-            if(!empty($OKmessaggio)) {
-                self::SUCCESS("OK!", $OKmessaggio);
-            }            
-        }
-        if(!empty($linkback)) {
-            self::BUTTON("Torna indietro", $linkback);
-        }
+        }        
     }
 
 
