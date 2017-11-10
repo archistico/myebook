@@ -14,7 +14,7 @@ class TemplateHTML {
             <title>$titolo</title>
 
             <link rel='stylesheet' href='vendor/bootstrap/bootstrap.min.css'>
-            <link rel='stylesheet' href='vendor/awesome/font-awesome.min.css'>
+            <link rel='stylesheet' href='vendor/awesome/css/font-awesome.min.css'>
             <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet'>
             <link href='css/stile.css' rel='stylesheet'>
         </head>
