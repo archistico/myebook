@@ -74,7 +74,6 @@ class Utilita {
         ini_set('display_errors',1);
         error_reporting(E_ALL);
 
-        $errors = array();
         session_start();
     }
 

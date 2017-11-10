@@ -190,6 +190,19 @@ class TemplateHTML {
         echo $html;
     }
 
+    public static function SHOW_NOTICE($errors, $OKmessaggio = "") {
+        if(!empty($errors)) {
+            foreach($errors as $err) {
+                self::ALERT("ATTENZIONE!", $err);
+            }    
+        } else {
+            if(!empty($OKmessaggio)) {
+                self::SUCCESS("OK!", $OKmessaggio);
+            }            
+        }
+    }
+
+
     public static function FORM_NUOVO_CODICE($libri, $formID) {
         $html = "
         <div class='row'>
@@ -340,7 +353,7 @@ class TemplateHTML {
             echo " <td>$lib->isbn</td>";
             echo " <td>&euro; $lib->prezzo</td>";
             echo " <td>$lib->nomefile</td>";
-            echo " <td><a href='admin_libri_elimina.php?id=$lib->id'><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></a></td>";
+            echo " <td><a href='admin_libri_elimina.php?id=$lib->id&ok=0'><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></a></td>";
             echo "</tr>";
         }  
 
@@ -385,5 +398,5 @@ class TemplateHTML {
         echo $html;
     }
 
-    
+
 }
