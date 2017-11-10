@@ -54,7 +54,6 @@ class TemplateHTML {
                     <label for='Codice'>Inserisci il codice</label>
                     <input type='text' class='form-control' id='Codice' placeholder='Codice' name='codice' maxlength='25' required>
                 </div>
-                <input type='hidden' name='formSendHome' value='$formID'>
                 <button type='submit' class='btn btn-info btn-block btn-lg'>CERCA</button>
             </form>
         </div>
@@ -63,18 +62,13 @@ class TemplateHTML {
         echo $html;
     }
 
-    public static function DOWNLOAD_EBOOK($codice, $ip, $data) {
+    public static function DOWNLOAD_EBOOK($codice) {
 
         $casaeditrice = $codice->getLibro()->casaeditrice;
         $titolo = $codice->getLibro()->titolo;
         $autore = $codice->getLibro()->autore;
         $isbn = $codice->getLibro()->isbn;
         $prezzo = $codice->getLibro()->prezzo;
-
-        // Cerca i file sul disco se non ci sono annulla la variabile
-        $pdf = $codice->getLibro()->getPdf();
-        $epub = $codice->getLibro()->getEpub();
-        $mobi = $codice->getLibro()->getMobi();
 
         $html = "
         <div class='row'>
@@ -83,30 +77,62 @@ class TemplateHTML {
                 <p>Autore: $autore<br>
                     ISBN: $isbn<br>
                     Prezzo: &euro; $prezzo<br><br>
-                    Acquirente: $codice->denominazione<br>
-                    IP: $ip<br>
-                    Data: $data<br><br>
                     Numero download: $codice->download/3<br>
                 </p>
             </div>
+        </div>
         ";
         echo $html;
 
         if($codice->download<=2) {
-            $html = "
-                <form action='download.php' method='post'>
+
+            // CANCELLA FILE
+            if(Libro::FILE_EXIST($codice->getLibro()->nomefile, 'pdf')) {
+                $html = "
+                <form action='download.php' method='post' class='paddingBottom20'>
+                    <div class='row'>
                     <div class='col-md-12'>
-                        <input type='hidden' name='codiceid' value='$codice->id'>
-                        <input type='hidden' name='file' value='$pdf'>
-                        <button type='submit' class='btn btn-info btn-lg'>SCARICA</button>
+                        <input type='hidden' name='codiceid' value='$codice->codice'>
+                        <input type='hidden' name='file' value='pdf'>
+                        <button type='submit' class='btn btn-info btn-lg btn-block'><i class='fa fa-file-pdf-o' aria-hidden='true'></i> SCARICA PDF</button>
+                    </div>
                     </div>
                 </form>
-            </div>
-            ";
-            echo $html;
+                ";
+                echo $html;
+            }
+
+            if(Libro::FILE_EXIST($codice->getLibro()->nomefile, 'epub')) {
+                $html = "
+                <form action='download.php' method='post' class='paddingBottom20'>
+                    <div class='row'>
+                    <div class='col-md-12'>
+                        <input type='hidden' name='codiceid' value='$codice->codice'>
+                        <input type='hidden' name='file' value='epub'>
+                        <button type='submit' class='btn btn-info btn-lg btn-block'><i class='fa fa-book' aria-hidden='true'></i> SCARICA EPUB</button>
+                    </div>
+                    </div>
+                </form>
+                ";
+                echo $html;
+            }
+
+            if(Libro::FILE_EXIST($codice->getLibro()->nomefile, 'mobi')) {
+                $html = "
+                <form action='download.php' method='post' class='paddingBottom20'>
+                    <div class='row'>
+                    <div class='col-md-12'>
+                        <input type='hidden' name='codiceid' value='$codice->codice'>
+                        <input type='hidden' name='file' value='mobi'>
+                        <button type='submit' class='btn btn-info btn-lg btn-block'><i class='fa fa-tablet' aria-hidden='true'></i> SCARICA MOBI - KINDLE</button>
+                    </div>
+                    </div>
+                </form>
+                ";
+                echo $html;
+            }
         } else {
             $html = "
-                </div>
                 <div class='alert alert-danger alert-dismissible'><h4><i class='icon fa fa-ban'></i> Raggiunto il livello massimo di download permessi</h4>contattare info@elmisworld.it per ulteriori informazioni</div>
             ";
             echo $html;
