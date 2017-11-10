@@ -53,7 +53,23 @@ if(empty($notices) && $ok == 1) {
     $libro->getDataByID($id);
 
     // CANCELLA FILE
-    echo "nomefile: ".$libro->nomefile;
+    if(Libro::FILE_EXIST($libro->nomefile, 'pdf')) {
+        if(!Libro::FILE_DELETE($libro->nomefile, 'pdf')) {
+            $notices[] = 'Errore nella cancellazione del file pdf';
+        }
+    }
+
+    if(Libro::FILE_EXIST($libro->nomefile, 'epub')) {
+        if(!Libro::FILE_DELETE($libro->nomefile, 'epub')) {
+            $notices[] = 'Errore nella cancellazione del file epub';
+        }
+    }
+
+    if(Libro::FILE_EXIST($libro->nomefile, 'mobi')) {
+        if(!Libro::FILE_DELETE($libro->nomefile, 'mobi')) {
+            $notices[] = 'Errore nella cancellazione del file mobi';
+        }
+    }
 
     // CANCELLA LIBRO DAL DB
     if(!Libro::DELETEBYID($id)) {

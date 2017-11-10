@@ -24,15 +24,6 @@ class Libro {
         return $this->nomefile.".mobi";
     }
 
-    public function fileExist($tipo) {
-        require('config.php');
-        if (file_exists($dir_upload."/".$tipo."/".$this->nomefile.".".strtolower($tipo))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function getInfo()
     {
         return $this->casaeditrice . " - " .$this->titolo . " - " . $this->autore . " (" . $this->isbn .")";
@@ -211,7 +202,38 @@ class Libro {
         return $effettuato;
     }
 
+    public static function FILE_EXIST($nomefile, $tipo) {
+        // Parametri
+        require('config.php');
+
+        if (file_exists($dir_upload."/".strtolower($tipo)."/".$nomefile.".".strtolower($tipo))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function FILE_DELETE($nomefile, $tipo) {
+        // Parametri
+        require('config.php');
+
+        if(self::FILE_EXIST($nomefile, $tipo)) {
+            if(unlink($dir_upload."/".strtolower($tipo)."/".$nomefile.".".strtolower($tipo))) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
 }
+
+/*  ----------------------------
+ *         CLASSE LIBRI
+ *  ----------------------------
+ */
 
 class Libri {
     public $libri;
