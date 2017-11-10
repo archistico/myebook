@@ -190,7 +190,18 @@ class TemplateHTML {
         echo $html;
     }
 
-    public static function SHOW_NOTICE($errors, $OKmessaggio = "") {
+    public static function BUTTON($text, $link) {
+        $html = "
+        <div class='row'>
+        <div class='col-md-12'>
+            <a href='$link'>$text<a>
+        </div>
+        </div>        
+        ";
+        echo $html;
+    }
+
+    public static function SHOW_NOTICE($errors, $OKmessaggio = "", $linkback = "") {
         if(!empty($errors)) {
             foreach($errors as $err) {
                 self::ALERT("ATTENZIONE!", $err);
@@ -199,6 +210,9 @@ class TemplateHTML {
             if(!empty($OKmessaggio)) {
                 self::SUCCESS("OK!", $OKmessaggio);
             }            
+        }
+        if(!empty($linkback)) {
+            self::BUTTON("Torna indietro", $linkback);
         }
     }
 
@@ -361,17 +375,6 @@ class TemplateHTML {
         </tbody>
         </table>
         </div>
-        </div>
-        ";
-        echo $html;
-    }
-
-    public static function BOXPRIMARY($message) {
-        $html = "
-        <div class='box box-primary'>
-            <div class='box-header with-border'>
-                <h3 class='box-title'>$message</h3>
-            </div>
         </div>
         ";
         echo $html;

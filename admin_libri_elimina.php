@@ -39,16 +39,23 @@ if(empty($errors) && !Libro::CODICICOLLEGATI($id)) {
     $errors[] = 'Codici colleghi, cancellare prima quelli';
 }
 
-// SE LIBRO ESISTE
+// MOSTRO LA SCELTA
 if(empty($errors) && $ok != 1) {
     $libro = new Libro();
     $libro->getDataByID($id);
     TemplateHTML::SCELTA("ATTENZIONE! CANCELLARE IL LIBRO?", $libro->getInfo(), "CANCELLA", "admin_libri_elimina.php?id=$id&ok=1", "admin_libri.php");
-} else {
-    echo "CANCELLA";
-}
+} 
 
-TemplateHTML::SHOW_NOTICE($errors);
+// SE INVECE HO ACCETTATO
+if(empty($errors) && $ok == 1) {
+    
+    // CANCELLA FILE
+
+    // CANCELLA LIBRO DAL DB
+
+} 
+
+TemplateHTML::SHOW_NOTICE($errors, "Libro cancellato", "admin_libri.php");
 
 // Elementi di chiusura
 TemplateHTML::CLOSECONTAINER();
