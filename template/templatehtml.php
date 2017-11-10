@@ -370,12 +370,12 @@ class TemplateHTML {
             <div class='row'>
                 <div class='col-md-12'>
                     <h1>$message</h1>
-                    <h4>$elemento</h4>
+                    <h6>$elemento</h6>
                 </div>
             </div>
-            <div class='row'>
+            <div class='row paddingTop20'>
             <div class='col-md-6'>
-                <a class='btn btn-block btn-default btn-lg' href='$linkAnnulla'>Annulla</a>
+                <a class='btn btn-block btn-secondary btn-lg' href='$linkAnnulla'>Annulla</a>
             </div>
             <div class='col-md-6'>
                 <a class='btn btn-block btn-danger btn-lg' href='$linkTasto'>$tasto</a>

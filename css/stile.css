@@ -23,3 +23,11 @@ body {
   border-radius: 0px;
   padding: 1rem 2rem;
 }
+
+.paddingTop20 {
+  padding-top: 20px;
+}
+
+.paddingBottom20 {
+  padding-bottom: 20px;
+}

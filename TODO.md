@@ -6,6 +6,7 @@
 + nella pagina download controllare quali file sono disponibili e pulsante
 + conferme prima della cancellazione
 + verifica che prima dell'eliminazione libro non ci siano codici associati 
++ stampa errori come foreach sull'array errors
   
 #### Codici:
 + modifica

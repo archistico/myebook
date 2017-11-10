@@ -16,28 +16,29 @@ TemplateHTML::MENU();
 TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Elimina libro");
 
 // if sono presenti tutti
-if (!empty($_POST['id']) && (isset($_POST['formid']) && isset($_SESSION['formid']) && $_POST["formid"] == $_SESSION["formid"])) {
-    // cancello il formid
-    $_SESSION["formid"] = '';
-
-    if (empty($_POST['id'])) {
+if (!empty($_GET['id'])) {
+    
+    if (empty($_GET['id'])) {
         $errors['id'] = 'ID libro non passato';
     } else {
-        $librofk = Utilita::PULISCISTRINGA($_POST['libroID']);
+        $id = Utilita::PULISCISTRINGA($_GET['id']);
     }
 
     if (empty($errors)) {
         // SE VALIDAZIONE OK
+
+        // SE LIBRO ESISTE
+        if(Libro::EXIST($id)) {
+            $libro = new Libro();
+            $libro->getDataByID($id);
+            TemplateHTML::SCELTA("ATTENZIONE! CANCELLARE IL LIBRO?", $libro->getInfo(), "CANCELLA", "", "", "");
+        } else {
+            TemplateHTML::ALERT("ATTENZIONE!","Nessun libro con questo ID");        
+        }     
     }
-        
-    unset($_POST);
-    $_POST = array();
+} else {
+    TemplateHTML::ALERT("ATTENZIONE!","ID non inserito");
 }
-
-// Creo il formid per questa sessione
-$_SESSION["formid"] = md5(rand(0,10000000));
-
-TemplateHTML::SCELTA("ATTENZIONE! CANCELLARE IL LIBRO?", "Elemento", "CANCELLA", "", "", "");
 
 // Elementi di chiusura
 TemplateHTML::CLOSECONTAINER();
