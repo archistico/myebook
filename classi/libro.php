@@ -9,36 +9,22 @@ class Libro {
     public $prezzo;
     public $nomefile;
 
-    public function getPdf()
-    {
-        return $this->nomefile.".pdf";
-    }
-
-    public function getEpub()
-    {
-        return $this->nomefile.".epub";
-    }
-
-    public function getMobi()
-    {
-        return $this->nomefile.".mobi";
-    }
-
     public function getInfo()
     {
         return $this->casaeditrice . " - " .$this->titolo . " - " . $this->autore . " (" . $this->isbn .")";
     }
 
-    public function getFilenamepdf() {
-        return str_replace("/", "-", $this->getInfo().".pdf");
+    public function getCompleteFilenameStore($tipo) {
+        // Parametri
+        require('config.php');
+
+        $nomefile = $this->nomefile.".".$tipo;
+        return $dir_upload."/".strtolower($tipo)."/".$nomefile;
     }
 
-    public function getFilenameepub() {
-        return str_replace("/", "-", $this->getInfo().".epub");
-    }
-
-    public function getFilenamemobi() {
-        return str_replace("/", "-", $this->getInfo().".mobi");
+    public function getFilenameDownload($tipo) {
+        $nomefile = $this->casaeditrice. " - " . $this->titolo . " (" . $this->autore. ")";
+        return str_replace(array('+','_','|','%',';',':','"','\'','/','.'), '-', $nomefile).".".$tipo;
     }
 
     public function storeDB() {
@@ -79,54 +65,54 @@ class Libro {
     public function getDataByID($id) {
         // Parametri
         require('config.php');
-        
-                try {
-                    $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
-                    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-                    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-                    $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
-                    $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET CHARACTER SET UTF8');
-        
-                    $sql = "SELECT * FROM libro
-                            WHERE libroid = $id LIMIT 1";
-                    $result = $db->query($sql);
-        
-                    foreach ($result as $row) {
-                        $row = get_object_vars($row);
-        
-                        $this->id = $row['libroid'];
-                        $this->casaeditrice = db2html($row['casaeditrice']);
-                        $this->titolo = db2html($row['titolo']);
-                        $this->autore = db2html($row['autore']);
-                        $this->isbn = $row['isbn'];
-                        $this->prezzo = $row['prezzo'];
-                        $this->nomefile = $row['nomefile'];
-                    }
-                    // chiude il database
-                    $db = NULL;
-                } catch (PDOException $e) {
-                    throw new PDOException("Error  : " . $e->getMessage());
-                }
-    }
 
-    public static function EXIST($id) {
-        // Ritorna true se esiste
-        $exist = false;
-        
-        // Parametri
-        require('config.php');
-        
         try {
             $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
             $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET CHARACTER SET UTF8');
-            
+
+            $sql = "SELECT * FROM libro
+                            WHERE libroid = $id LIMIT 1";
+            $result = $db->query($sql);
+
+            foreach ($result as $row) {
+                $row = get_object_vars($row);
+
+                $this->id = $row['libroid'];
+                $this->casaeditrice = db2html($row['casaeditrice']);
+                $this->titolo = db2html($row['titolo']);
+                $this->autore = db2html($row['autore']);
+                $this->isbn = $row['isbn'];
+                $this->prezzo = $row['prezzo'];
+                $this->nomefile = $row['nomefile'];
+            }
+            // chiude il database
+            $db = NULL;
+        } catch (PDOException $e) {
+            throw new PDOException("Error  : " . $e->getMessage());
+        }
+    }
+
+    public static function EXIST($id) {
+        // Ritorna true se esiste
+        $exist = false;
+
+        // Parametri
+        require('config.php');
+
+        try {
+            $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
+            $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
+            $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET CHARACTER SET UTF8');
+
             $sql = "SELECT COUNT(*) AS numero FROM libro
                     WHERE libroid = $id";
             $result = $db->query($sql);
-            
+
             $row = $result->fetch(PDO::FETCH_ASSOC);
             if($row['numero']>0) {
                 $exist = true;
@@ -137,28 +123,28 @@ class Libro {
         } catch (PDOException $e) {
             throw new PDOException("Error  : " . $e->getMessage());
         }
-        
+
         return $exist;
     }
 
     public static function CODICICOLLEGATI($id) {
         // Ritorna true se non ha codici collegati
         $nonlibricollegati = false;
-        
+
         // Parametri
         require('config.php');
-        
+
         try {
             $db = new PDO("mysql:host=" . $dbhost . ";dbname=" . $dbname, $dbuser, $dbpswd);
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
             $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
             $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
             $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET CHARACTER SET UTF8');
-            
+
             $sql = "SELECT COUNT(*) AS numero FROM codice
                     WHERE librofk = $id";
             $result = $db->query($sql);
-            
+
             $row = $result->fetch(PDO::FETCH_ASSOC);
             if($row['numero']==0) {
                 $nonlibricollegati = true;
@@ -169,7 +155,7 @@ class Libro {
         } catch (PDOException $e) {
             throw new PDOException("Error  : " . $e->getMessage());
         }
-        
+
         return $nonlibricollegati;
     }
 

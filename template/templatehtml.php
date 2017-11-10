@@ -85,7 +85,7 @@ class TemplateHTML {
         ";
         echo $html;
 
-        if($codice->download<=2) {
+        if($codice->getOkMaxDownload()) {
 
             // CANCELLA FILE
             if(Libro::FILE_EXIST($codice->getLibro()->nomefile, 'pdf')) {
@@ -93,8 +93,8 @@ class TemplateHTML {
                 <form action='download.php' method='post' class='paddingBottom20'>
                     <div class='row'>
                     <div class='col-md-12'>
-                        <input type='hidden' name='codiceid' value='$codice->codice'>
-                        <input type='hidden' name='file' value='pdf'>
+                        <input type='hidden' name='codice' value='$codice->codice'>
+                        <input type='hidden' name='tipo' value='pdf'>
                         <button type='submit' class='btn btn-info btn-lg btn-block'><i class='fa fa-file-pdf-o' aria-hidden='true'></i> SCARICA PDF</button>
                     </div>
                     </div>
@@ -108,8 +108,8 @@ class TemplateHTML {
                 <form action='download.php' method='post' class='paddingBottom20'>
                     <div class='row'>
                     <div class='col-md-12'>
-                        <input type='hidden' name='codiceid' value='$codice->codice'>
-                        <input type='hidden' name='file' value='epub'>
+                        <input type='hidden' name='codice' value='$codice->codice'>
+                        <input type='hidden' name='tipo' value='epub'>
                         <button type='submit' class='btn btn-info btn-lg btn-block'><i class='fa fa-book' aria-hidden='true'></i> SCARICA EPUB</button>
                     </div>
                     </div>
@@ -123,8 +123,8 @@ class TemplateHTML {
                 <form action='download.php' method='post' class='paddingBottom20'>
                     <div class='row'>
                     <div class='col-md-12'>
-                        <input type='hidden' name='codiceid' value='$codice->codice'>
-                        <input type='hidden' name='file' value='mobi'>
+                        <input type='hidden' name='codice' value='$codice->codice'>
+                        <input type='hidden' name='tipo' value='mobi'>
                         <button type='submit' class='btn btn-info btn-lg btn-block'><i class='fa fa-tablet' aria-hidden='true'></i> SCARICA MOBI - KINDLE</button>
                     </div>
                     </div>

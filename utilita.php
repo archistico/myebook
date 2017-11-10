@@ -1,7 +1,7 @@
 <?php
 function solonumeri($str) {
     // FILTER_SANITIZE_MAGIC_QUOTES
-    return filter_var(str_replace(array('+','-','_','|','%',';',':','"','\''), '', $str), FILTER_SANITIZE_NUMBER_INT);
+    return filter_var(str_replace(array('+','-','_','|','%',';',':','"','\'','/'), '', $str), FILTER_SANITIZE_NUMBER_INT);
 }
 
 function soloNumeriLettere($str) {
@@ -11,20 +11,6 @@ function soloNumeriLettere($str) {
 function codiceValido($str) {
     return preg_match('/^[a-zA-Z0-9 .\-]+$/i', $str);
 }
-
-/*
-function convertiStringaToHTML($stringa) {
-  return htmlentities($stringa, ENT_COMPAT,'UTF-8', true);
-}
-
-function convertiHTMLToStringa($stringa) {
-  return htmlspecialchars($stringa, ENT_COMPAT,'UTF-8', true);
-}
-
-function convertiApostrofi($stringa) {
-  return htmlspecialchars($stringa, ENT_QUOTES,'UTF-8', true);
-}
-*/
 
 function convertiCodiceSeparatore($str) {
     if(strlen($str)==14){
@@ -94,5 +80,3 @@ class Utilita {
         }
     }
 }
-
-?>

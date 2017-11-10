@@ -55,6 +55,16 @@ class Codice
         return $this->download;
     }
 
+    public function getOkMaxDownload()
+    {
+        if($this->download<=2) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public function getLibroByCodice($codiceInserito) {
         // Parametri
         require('config.php');
@@ -190,12 +200,12 @@ class Codice
 
     public function getCodiceSeparatore($separatore) {
         return substr($this->codice, 0, 2).$separatore.
-               substr($this->codice, 2, 2).$separatore.
-               substr($this->codice, 4, 2).$separatore.
-               substr($this->codice, 6, 2).$separatore.
-               substr($this->codice, 8, 2).$separatore.
-               substr($this->codice, 10, 2).$separatore.
-               substr($this->codice, 12, 2);
+            substr($this->codice, 2, 2).$separatore.
+            substr($this->codice, 4, 2).$separatore.
+            substr($this->codice, 6, 2).$separatore.
+            substr($this->codice, 8, 2).$separatore.
+            substr($this->codice, 10, 2).$separatore.
+            substr($this->codice, 12, 2);
     }
 
     public static function DELETEBYID($id) {
@@ -226,6 +236,8 @@ class Codice
 
         return $effettuato;
     }
+
+
 }
 
 /* -----------------------------------
