@@ -56,7 +56,7 @@ class Codice
     }
 
     public function getLibroByCodice($codiceInserito) {
-        // Parametri db
+        // Parametri
         require('config.php');
 
         try {

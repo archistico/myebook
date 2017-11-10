@@ -60,16 +60,66 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
         $libro->prezzo = $prezzo;
         $libro->nomefile = $libro->calcolaNomeFile();
 
-        if(!$libro->storeDB()) {
+        //if(!$libro->storeDB()) {
+        if(!true) {
             $errors['store'] = 'Errore database';
         } else {
-            // Se ok
-            // poi copio i file nella directory
-        }
+            // INIZIO OK DOPO STOREDB
+
+            // Parametri
+            require('config.php');
+
+            // CONTROLLARE SE FILE GIA' ESISTENTE, SE DIMENSIONE MASSIMA RISPETTATA, SE ESTENSIONE OK, SE SPOSTAMENTO ESEGUITO
+            $check_esistente = false;
+            $check_dimensione = false;
+            $check_estensione = false;
+            $check_spostamento = false;
+
+            $filePDF = $dir_upload . "/pdf/" . $libro->getPdf();
+            $fileTypePDF = pathinfo($_FILES["filePDF"]["name"],PATHINFO_EXTENSION);
+
+            // Check if file already exists
+            if (!file_exists($filePDF)) {
+                $check_esistente = true;
+            } else {
+                TemplateHTML::ALERT("ATTENZIONE!","File PDF già esistente");
+            }
+
+            // Check file size
+            if ($check_esistente) {
+                if ($_FILES["filePDF"]["size"] < $max_fileupload) {
+                    $check_dimensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Dimensione file PDF troppo grande - massimo: " . ($max_fileupload / 1000) . " Kb");
+                }
+            }
+
+            // Allow certain file formats
+            if($check_esistente && $check_dimensione) {
+                if($fileTypePDF == "pdf") {
+                    $check_estensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Il file deve essere un PDF");
+                }
+            }
+
+            if ($check_esistente && $check_dimensione && $check_estensione) {
+                if (move_uploaded_file($_FILES["filePDF"]["tmp_name"], $filePDF)) {
+                    $check_spostamento = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!","Impossibile copiare il PDF");
+                }
+            }
+
+            if(!$check_esistente || !$check_dimensione || !$check_estensione || !$check_spostamento) {
+                $errors['filePDF'] = "Errore caricamento PDF";
+            }
+
+        } // FINE OK DOPO STOREDB
     }
 
     if (!empty($errors)) {
-        TemplateHTML::ALERT("ATTENZIONE!","Ci sono degli errori");
+        TemplateHTML::ALERT("ATTENZIONE!","Inserimento NON riuscito");
     } else {
         TemplateHTML::SUCCESS("OK!","Inserimento riuscito");
     }

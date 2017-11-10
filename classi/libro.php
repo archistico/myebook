@@ -24,73 +24,14 @@ class Libro {
         return $this->nomefile.".mobi";
     }
 
-    /*
-    public function setCasaeditrice($casaeditrice)
-    {
-        $this->casaeditrice = $casaeditrice;
-        return $this;
+    public function fileExist($tipo) {
+        require('config.php');
+        if (file_exists($dir_upload."/".$tipo."/".$this->nomefile.".".strtolower($tipo))) {
+            return true;
+        } else {
+            return false;
+        }
     }
-
-    public function getCasaeditrice()
-    {
-        return $this->casaeditrice;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getNomefile()
-    {
-        return $this->nomefile;
-    }
-
-    public function setNomefile($nomefile)
-    {
-        $this->nomefile = $nomefile;
-    }
-
-    public function getPrezzo()
-    {
-        return $this->prezzo;
-    }
-
-    public function setPrezzo($prezzo)
-    {
-        $this->prezzo = $prezzo;
-    }
-
-    public function getAutore()
-    {
-        return $this->autore;
-    }
-
-    public function setAutore($autore)
-    {
-        $this->autore = $autore;
-    }
-
-    public function getTitolo()
-    {
-        return $this->titolo;
-    }
-
-    public function setTitolo($titolo)
-    {
-        $this->titolo = $titolo;
-    }
-
-    public function getIsbn()
-    {
-        return $this->isbn;
-    }
-
-    public function setIsbn($isbn)
-    {
-        $this->isbn = $isbn;
-    }
-    */
 
     public function getInfo()
     {
@@ -110,7 +51,7 @@ class Libro {
     }
 
     public function storeDB() {
-        // Parametri db
+        // Parametri
         require('config.php');
 
         $result = false;

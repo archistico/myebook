@@ -270,7 +270,7 @@ class TemplateHTML {
         $html = "
         <div class='row'>
         <div class='col-md-12'>
-            <form action='admin_libri.php' method='post'>
+            <form action='admin_libri.php' method='post' enctype='multipart/form-data'>
                 <div class='form-group'>
                     <label for='Titolo'>Titolo</label>
                     <input type='text' class='form-control' id='Titolo' placeholder='Titolo' name='titolo' required>
@@ -292,8 +292,16 @@ class TemplateHTML {
                     <input type='number' class='form-control' id='Prezzo' placeholder='Prezzo' step='0.01' max='1000' min='0' name='prezzo' required>
                 </div>
                 <div class='form-group'>
-                    <label for='fileToUpload'>Seleziona il file da caricare</label>
-                    <input type='file' name='fileToUpload' id='fileToUpload'>
+                    <label for='filePDF'>Seleziona il file .PDF </label>
+                    <input type='file' name='filePDF' id='filePDF'>
+                </div>
+                <div class='form-group'>
+                    <label for='fileEPUB'>Seleziona il file EPUB</label>
+                    <input type='file' name='fileEPUB' id='fileEPUB'>
+                </div>
+                <div class='form-group'>
+                    <label for='fileMOBI'>Seleziona il file MOBI</label>
+                    <input type='file' name='fileMOBI' id='fileMOBI'>
                 </div>
                 <div class='form-group'>
                     <input type='hidden' name='formid' value='$formID'>
