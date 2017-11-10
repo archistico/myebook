@@ -54,7 +54,7 @@ class TemplateHTML {
                     <label for='Codice'>Inserisci il codice</label>
                     <input type='text' class='form-control' id='Codice' placeholder='Codice' name='codice' maxlength='25' required>
                 </div>
-                <input type='hidden' name='formid' value='$formID'>
+                <input type='hidden' name='formSendHome' value='$formID'>
                 <button type='submit' class='btn btn-info btn-block btn-lg'>CERCA</button>
             </form>
         </div>
@@ -286,7 +286,7 @@ class TemplateHTML {
             echo " <td>".convertiCodiceSeparatore($cod->codice)."</td>\n";
             echo " <td class='hidden-xs hidden-sm'>".$cod->download."</td>\n";
             echo " <td><a href='ripristina.php?codiceid=".$cod->id."'><i class='fa fa-refresh fa-lg verde'></i></a></td>";
-            echo " <td><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></td>";
+            echo " <td><a href='admin_codici_elimina.php?id=$cod->id&ok=0'><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></a></td>";
             echo "</tr>";
         }
 

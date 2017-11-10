@@ -16,10 +16,10 @@ TemplateHTML::MENU();
 TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Download ebook tramite codice");
 
 // SE E' STATO INVIATO IL FORM 
-if (!empty($_POST['codice']) && (isset($_POST['formid']) && isset($_SESSION['formid']) && $_POST["formid"] == $_SESSION["formid"])) {
+if (!empty($_POST['codice']) && (isset($_POST['formSendHome']) && isset($_SESSION['formSendHome']) && $_POST["formSendHome"] == $_SESSION["formSendHome"])) {
 
-    // cancello il formid
-    $_SESSION["formid"] = '';
+    // cancello il formSendHome
+    $_SESSION["formSendHome"] = '';
 
     $codiceInserito = solonumeri($_POST['codice']);
 
@@ -42,10 +42,10 @@ if (!empty($_POST['codice']) && (isset($_POST['formid']) && isset($_SESSION['for
     }
 } else {
     // SE NON E' STATO INVIATO IL FORM
-    $_SESSION["formid"] = md5(rand(0,10000000));
+    $_SESSION["formSendHome"] = md5(rand(0,10000000));
 
     TemplateHTML::HEADER("Cerca ebook");
-    TemplateHTML::FORM_CERCA_CODICE(htmlspecialchars($_SESSION["formid"]));
+    TemplateHTML::FORM_CERCA_CODICE(htmlspecialchars($_SESSION["formSendHome"]));
 }
 
 // Elementi di chiusura
