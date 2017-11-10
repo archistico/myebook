@@ -16,29 +16,36 @@ TemplateHTML::MENU();
 TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Elimina libro");
 
 // if sono presenti tutti
-if (!empty($_GET['id'])) {
-    
-    if (empty($_GET['id'])) {
-        $errors['id'] = 'ID libro non passato';
-    } else {
-        $id = Utilita::PULISCISTRINGA($_GET['id']);
-    }
-
-    if (empty($errors)) {
-        // SE VALIDAZIONE OK
-
-        // SE LIBRO ESISTE
-        if(Libro::EXIST($id)) {
-            $libro = new Libro();
-            $libro->getDataByID($id);
-            TemplateHTML::SCELTA("ATTENZIONE! CANCELLARE IL LIBRO?", $libro->getInfo(), "CANCELLA", "", "", "");
-        } else {
-            TemplateHTML::ALERT("ATTENZIONE!","Nessun libro con questo ID");        
-        }     
-    }
+  
+if (empty($_GET['id'])) {
+    $errors[] = 'ID non inserito';
 } else {
-    TemplateHTML::ALERT("ATTENZIONE!","ID non inserito");
+    $id = Utilita::PULISCISTRINGA($_GET['id']);
 }
+if (empty($errors)) {
+    // SE VALIDAZIONE OK
+    if(!Libro::EXIST($id)) { 
+        $errors[] = 'Nessun libro con questo ID';
+    }
+    if(empty($errors) || !Libro::CODICICOLLEGATI($id)) { 
+        $errors[] = 'Codici colleghi, cancellare prima quelli';
+    }
+
+    // SE LIBRO ESISTE
+    if(empty($errors)) {
+        $libro = new Libro();
+        $libro->getDataByID($id);
+        TemplateHTML::SCELTA("ATTENZIONE! CANCELLARE IL LIBRO?", $libro->getInfo(), "CANCELLA", "", "", "");
+    }  
+}
+
+if(!empty($errors)) {
+    foreach($errors as $err) {
+        TemplateHTML::ALERT("ATTENZIONE!", $err);
+    }    
+}
+    
+
 
 // Elementi di chiusura
 TemplateHTML::CLOSECONTAINER();
