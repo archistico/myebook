@@ -340,16 +340,49 @@ class TemplateHTML {
             echo " <td>$lib->isbn</td>";
             echo " <td>&euro; $lib->prezzo</td>";
             echo " <td>$lib->nomefile</td>";
-            echo " <td><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></td>";
+            echo " <td><a href='admin_libri_elimina.php?id=$lib->id'><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></a></td>";
             echo "</tr>";
-        }
+        }  
 
         $html = "
-          </tbody>
+        </tbody>
         </table>
         </div>
         </div>
         ";
         echo $html;
+    }
+
+    public static function BOXPRIMARY($message) {
+        $html = "
+        <div class='box box-primary'>
+            <div class='box-header with-border'>
+                <h3 class='box-title'>$message</h3>
+            </div>
+        </div>
+        ";
+        echo $html;
+    }
+
+    public static function SCELTA($message, $elemento, $tasto, $linkTasto, $linkAnnulla) {
+        $html = "
+        <div class='box-body'>
+            <div class='row'>
+                <div class='col-md-12'>
+                    <h1>$message</h1>
+                    <h4>$elemento</h4>
+                </div>
+            </div>
+            <div class='row'>
+            <div class='col-md-6'>
+                <a class='btn btn-block btn-default btn-lg' href='$linkAnnulla'>Annulla</a>
+            </div>
+            <div class='col-md-6'>
+                <a class='btn btn-block btn-danger btn-lg' href='$linkTasto'>$tasto</a>
+            </div>
+        </div>
+        ";
+        echo $html;
+
     }
 }
