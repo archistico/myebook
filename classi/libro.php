@@ -9,6 +9,19 @@ class Libro {
     public $prezzo;
     public $nomefile;
 
+    public function getPdf()
+    {
+        return $this->nomefile.".pdf";
+    }
+    public function getEpub()
+    {
+        return $this->nomefile.".epub";
+    }
+    public function getMobi()
+    {
+        return $this->nomefile.".mobi";
+    }
+
     public function getInfo()
     {
         return $this->casaeditrice . " - " .$this->titolo . " - " . $this->autore . " (" . $this->isbn .")";

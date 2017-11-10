@@ -45,7 +45,7 @@ class TemplateHTML {
         echo $html;
     }
 
-    public static function FORM_CERCA_CODICE($formID) {
+    public static function FORM_CERCA_CODICE() {
         $html = "
         <div class='row'>
         <div class='col-md-12'>

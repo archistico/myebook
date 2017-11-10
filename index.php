@@ -40,7 +40,7 @@ if (!empty($_POST['codice'])) {
 } else {
 
     TemplateHTML::HEADER("Cerca ebook");
-    TemplateHTML::FORM_CERCA_CODICE(htmlspecialchars($_SESSION["formSendHome"]));
+    TemplateHTML::FORM_CERCA_CODICE();
 }
 
 // Elementi di chiusura

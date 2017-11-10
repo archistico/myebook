@@ -123,7 +123,7 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
             $check_estensione = false;
             $check_spostamento = false;
 
-            $fileEPUB = $dir_upload . "/epub/" . $libro->getEPUB();
+            $fileEPUB = $dir_upload . "/epub/" . $libro->getEpub();
             $fileTypeEPUB = pathinfo($_FILES["fileEPUB"]["name"],PATHINFO_EXTENSION);
 
             // Check if file already exists
@@ -171,7 +171,7 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
             $check_estensione = false;
             $check_spostamento = false;
 
-            $fileMOBI = $dir_upload . "/mobi/" . $libro->getMOBI();
+            $fileMOBI = $dir_upload . "/mobi/" . $libro->getMobi();
             $fileTypeMOBI = pathinfo($_FILES["fileMOBI"]["name"],PATHINFO_EXTENSION);
 
             // Check if file already exists
