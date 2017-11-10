@@ -13,3 +13,6 @@
   
 #### Libri:
 + modifica
+
+#### Da studiare
++ http://php.net/manual/en/function.hexdec.php
