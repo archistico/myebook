@@ -73,11 +73,12 @@ class TemplateHTML {
         $html = "
         <div class='row'>
             <div class='col-md-12'>
-                <h3>$casaeditrice - $titolo</h3>
+                <h2>$titolo</h2>
                 <p>Autore: $autore<br>
-                    ISBN: $isbn<br>
-                    Prezzo: &euro; $prezzo<br><br>
-                    Numero download: $codice->download/3<br>
+                   Casa editrice: $casaeditrice<br>
+                   ISBN: $isbn<br>
+                   Prezzo: &euro; $prezzo<br><br>
+                   Numero download: $codice->download/3<br>
                 </p>
             </div>
         </div>
