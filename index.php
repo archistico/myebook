@@ -12,7 +12,7 @@ require_once('classi/libro.php');
 
 TemplateHTML::HEAD("Download Ebook - Elmi's World");
 TemplateHTML::OPENCONTAINER();
-TemplateHTML::MENU();
+//TemplateHTML::MENU();
 TemplateHTML::JUMBOTRON("Casa editrice Elmi's World", "Download ebook tramite codice");
 
 // SE E' STATO INVIATO IL FORM 
@@ -29,18 +29,32 @@ if (!empty($_POST['codice'])) {
         $codice = new Codice();
         if($codice->getLibroByCodice($codiceInserito)) {
             TemplateHTML::DOWNLOAD_EBOOK($codice);
+
+
+            TemplateHTML::HEADER("Cerca un'altro ebook");
+            TemplateHTML::FORM_CERCA_CODICE();
+            TemplateHTML::INFORMAZIONI();
         } else {
             TemplateHTML::ALERT("ATTENZIONE!","Codice non trovato");
             Utilita::LOG("Codice non trovato", $codiceInserito, 0, 0);
+
+            TemplateHTML::HEADER("Cerca ebook");
+            TemplateHTML::FORM_CERCA_CODICE();
+            TemplateHTML::INFORMAZIONI();
         }
     } else {
         TemplateHTML::ALERT("ATTENZIONE!","Codice non valido");
         Utilita::LOG("Codice non valido", str_replace("'", "''",$codiceInserito), 0, 0);
+
+        TemplateHTML::HEADER("Cerca ebook");
+        TemplateHTML::FORM_CERCA_CODICE();
+        TemplateHTML::INFORMAZIONI();
     }
 } else {
 
     TemplateHTML::HEADER("Cerca ebook");
     TemplateHTML::FORM_CERCA_CODICE();
+    TemplateHTML::INFORMAZIONI();
 }
 
 // Elementi di chiusura

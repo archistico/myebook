@@ -432,5 +432,24 @@ class TemplateHTML {
         echo $html;
     }
 
-
+    public static function INFORMAZIONI() {
+        $html = "
+        <div class='row paddingTop20'>
+            <div class='col-md-6'>
+                <img src='img/TalloncinoEbook-02.jpg' class='img-fluid' alt='Cartoncino'>
+            </div>
+            <div class='col-md-6'>
+                <h3>Informazioni</h3>
+                <ul>
+                    <li>Ricopia il codice che trovi sul cartoncino</li>
+                    <li>Clicca su cerca</li>
+                    <li>Scarica l'ebook</li>
+                </ul>
+                <p>Se avete ancora dubbi: </p>
+                <a href='mailto:info@elmisworld.it'>info@elmisworld.it</a>
+            </div>
+        </div>
+        ";
+        echo $html;
+    }
 }

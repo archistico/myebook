@@ -21,8 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `elmiswor31674`
 --
-CREATE DATABASE IF NOT EXISTS `elmiswor31674` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `elmiswor31674`;
+-- CREATE DATABASE IF NOT EXISTS `elmiswor31674` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+-- USE `elmiswor31674`;
 
 -- --------------------------------------------------------
 
