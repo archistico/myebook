@@ -60,162 +60,163 @@ if (!empty($_POST['titolo']) && (isset($_POST['formid']) && isset($_SESSION['for
         $libro->prezzo = $prezzo;
         $libro->nomefile = $libro->calcolaNomeFile();
 
-        // TODO: Bypass
-        if(!$libro->storeDB()) { //if(!true) {
+        // TODO: COME FACCIO A CAPIRE COSA HO CARICATO? INVERTO PRIMA CARICO FILE E POI SALVO NEL DB
+        // TODO: AGGIUNTO TRE BOOL ALLA BASE DATI CON PDF, EPUB, MOBI
+
+        // CARICO I FILE
+
+        // Parametri
+        require('config.php');
+
+        // PDF
+        if(!empty($_FILES["filePDF"]["name"])) {
+            $check_esistente = false;
+            $check_dimensione = false;
+            $check_estensione = false;
+            $check_spostamento = false;
+
+            $filePDF = $dir_upload . "/pdf/" . $libro->getPdf();
+            $fileTypePDF = pathinfo($_FILES["filePDF"]["name"],PATHINFO_EXTENSION);
+
+            // Check if file already exists
+            if (!file_exists($filePDF)) {
+                $check_esistente = true;
+            } else {
+                TemplateHTML::ALERT("ATTENZIONE!","File PDF già esistente");
+            }
+
+            // Check file size
+            if ($check_esistente) {
+                if ($_FILES["filePDF"]["size"] < $max_fileupload) {
+                    $check_dimensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Dimensione file PDF troppo grande - massimo: " . ($max_fileupload / 1000) . " Kb");
+                }
+            }
+
+            // Allow certain file formats
+            if($check_esistente && $check_dimensione) {
+                if(strtolower($fileTypePDF) == "pdf") {
+                    $check_estensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Il file deve essere un PDF");
+                }
+            }
+
+            if ($check_esistente && $check_dimensione && $check_estensione) {
+                if (move_uploaded_file($_FILES["filePDF"]["tmp_name"], $filePDF)) {
+                    $check_spostamento = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!","Impossibile copiare il PDF");
+                }
+            }
+
+            if(!$check_esistente || !$check_dimensione || !$check_estensione || !$check_spostamento) {
+                $errors['filePDF'] = "Errore caricamento PDF";
+            }
+        } // FINE CARICAMENTO PDF
+
+        // EPUB
+        if(!empty($_FILES["fileEPUB"]["name"])) {
+            $check_esistente = false;
+            $check_dimensione = false;
+            $check_estensione = false;
+            $check_spostamento = false;
+
+            $fileEPUB = $dir_upload . "/epub/" . $libro->getEPUB();
+            $fileTypeEPUB = pathinfo($_FILES["fileEPUB"]["name"],PATHINFO_EXTENSION);
+
+            // Check if file already exists
+            if (!file_exists($fileEPUB)) {
+                $check_esistente = true;
+            } else {
+                TemplateHTML::ALERT("ATTENZIONE!","File EPUB già esistente");
+            }
+
+            // Check file size
+            if ($check_esistente) {
+                if ($_FILES["fileEPUB"]["size"] < $max_fileupload) {
+                    $check_dimensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Dimensione file EPUB troppo grande - massimo: " . ($max_fileupload / 1000) . " Kb");
+                }
+            }
+
+            // Allow certain file formats
+            if($check_esistente && $check_dimensione) {
+                if(strtolower($fileTypeEPUB) == "epub") {
+                    $check_estensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Il file deve essere un EPUB");
+                }
+            }
+
+            if ($check_esistente && $check_dimensione && $check_estensione) {
+                if (move_uploaded_file($_FILES["fileEPUB"]["tmp_name"], $fileEPUB)) {
+                    $check_spostamento = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!","Impossibile copiare il EPUB");
+                }
+            }
+
+            if(!$check_esistente || !$check_dimensione || !$check_estensione || !$check_spostamento) {
+                $errors['fileEPUB'] = "Errore caricamento EPUB";
+            }
+        } // FINE CARICAMENTO EPUB
+
+        // MOBI
+        if(!empty($_FILES["fileMOBI"]["name"])) {
+            $check_esistente = false;
+            $check_dimensione = false;
+            $check_estensione = false;
+            $check_spostamento = false;
+
+            $fileMOBI = $dir_upload . "/mobi/" . $libro->getMOBI();
+            $fileTypeMOBI = pathinfo($_FILES["fileMOBI"]["name"],PATHINFO_EXTENSION);
+
+            // Check if file already exists
+            if (!file_exists($fileMOBI)) {
+                $check_esistente = true;
+            } else {
+                TemplateHTML::ALERT("ATTENZIONE!","File MOBI già esistente");
+            }
+
+            // Check file size
+            if ($check_esistente) {
+                if ($_FILES["fileMOBI"]["size"] < $max_fileupload) {
+                    $check_dimensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Dimensione file MOBI troppo grande - massimo: " . ($max_fileupload / 1000) . " Kb");
+                }
+            }
+
+            // Allow certain file formats
+            if($check_esistente && $check_dimensione) {
+                if(strtolower($fileTypeMOBI) == "mobi") {
+                    $check_estensione = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!", "Il file deve essere un MOBI");
+                }
+            }
+
+            if ($check_esistente && $check_dimensione && $check_estensione) {
+                if (move_uploaded_file($_FILES["fileMOBI"]["tmp_name"], $fileMOBI)) {
+                    $check_spostamento = true;
+                } else {
+                    TemplateHTML::ALERT("ATTENZIONE!","Impossibile copiare il MOBI");
+                }
+            }
+
+            if(!$check_esistente || !$check_dimensione || !$check_estensione || !$check_spostamento) {
+                $errors['fileMOBI'] = "Errore caricamento MOBI";
+            }
+        } // FINE CARICAMENTO MOBI
+    }
+
+    if (empty($errors)) {
+        if(!$libro->storeDB()) {
             $errors['store'] = 'Errore database';
-        } else {
-            // INIZIO OK DOPO STOREDB
-
-            // Parametri
-            require('config.php');
-
-            // TODO: COME FACCIO A CAPIRE COSA HO CARICATO?
-
-            // PDF
-            if(!empty($_FILES["filePDF"]["name"])) {
-                $check_esistente = false;
-                $check_dimensione = false;
-                $check_estensione = false;
-                $check_spostamento = false;
-
-                $filePDF = $dir_upload . "/pdf/" . $libro->getPdf();
-                $fileTypePDF = pathinfo($_FILES["filePDF"]["name"],PATHINFO_EXTENSION);
-
-                // Check if file already exists
-                if (!file_exists($filePDF)) {
-                    $check_esistente = true;
-                } else {
-                    TemplateHTML::ALERT("ATTENZIONE!","File PDF già esistente");
-                }
-
-                // Check file size
-                if ($check_esistente) {
-                    if ($_FILES["filePDF"]["size"] < $max_fileupload) {
-                        $check_dimensione = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!", "Dimensione file PDF troppo grande - massimo: " . ($max_fileupload / 1000) . " Kb");
-                    }
-                }
-
-                // Allow certain file formats
-                if($check_esistente && $check_dimensione) {
-                    if($fileTypePDF == "pdf") {
-                        $check_estensione = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!", "Il file deve essere un PDF");
-                    }
-                }
-
-                if ($check_esistente && $check_dimensione && $check_estensione) {
-                    if (move_uploaded_file($_FILES["filePDF"]["tmp_name"], $filePDF)) {
-                        $check_spostamento = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!","Impossibile copiare il PDF");
-                    }
-                }
-
-                if(!$check_esistente || !$check_dimensione || !$check_estensione || !$check_spostamento) {
-                    $errors['filePDF'] = "Errore caricamento PDF";
-                }
-            } // FINE CARICAMENTO PDF
-
-            // EPUB
-            if(!empty($_FILES["fileEPUB"]["name"])) {
-                $check_esistente = false;
-                $check_dimensione = false;
-                $check_estensione = false;
-                $check_spostamento = false;
-
-                $fileEPUB = $dir_upload . "/epub/" . $libro->getEPUB();
-                $fileTypeEPUB = pathinfo($_FILES["fileEPUB"]["name"],PATHINFO_EXTENSION);
-
-                // Check if file already exists
-                if (!file_exists($fileEPUB)) {
-                    $check_esistente = true;
-                } else {
-                    TemplateHTML::ALERT("ATTENZIONE!","File EPUB già esistente");
-                }
-
-                // Check file size
-                if ($check_esistente) {
-                    if ($_FILES["fileEPUB"]["size"] < $max_fileupload) {
-                        $check_dimensione = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!", "Dimensione file EPUB troppo grande - massimo: " . ($max_fileupload / 1000) . " Kb");
-                    }
-                }
-
-                // Allow certain file formats
-                if($check_esistente && $check_dimensione) {
-                    if($fileTypeEPUB == "EPUB") {
-                        $check_estensione = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!", "Il file deve essere un EPUB");
-                    }
-                }
-
-                if ($check_esistente && $check_dimensione && $check_estensione) {
-                    if (move_uploaded_file($_FILES["fileEPUB"]["tmp_name"], $fileEPUB)) {
-                        $check_spostamento = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!","Impossibile copiare il EPUB");
-                    }
-                }
-
-                if(!$check_esistente || !$check_dimensione || !$check_estensione || !$check_spostamento) {
-                    $errors['fileEPUB'] = "Errore caricamento EPUB";
-                }
-            } // FINE CARICAMENTO EPUB
-
-            // MOBI
-            if(!empty($_FILES["fileMOBI"]["name"])) {
-                $check_esistente = false;
-                $check_dimensione = false;
-                $check_estensione = false;
-                $check_spostamento = false;
-
-                $fileMOBI = $dir_upload . "/mobi/" . $libro->getMOBI();
-                $fileTypeMOBI = pathinfo($_FILES["fileMOBI"]["name"],PATHINFO_EXTENSION);
-
-                // Check if file already exists
-                if (!file_exists($fileMOBI)) {
-                    $check_esistente = true;
-                } else {
-                    TemplateHTML::ALERT("ATTENZIONE!","File MOBI già esistente");
-                }
-
-                // Check file size
-                if ($check_esistente) {
-                    if ($_FILES["fileMOBI"]["size"] < $max_fileupload) {
-                        $check_dimensione = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!", "Dimensione file MOBI troppo grande - massimo: " . ($max_fileupload / 1000) . " Kb");
-                    }
-                }
-
-                // Allow certain file formats
-                if($check_esistente && $check_dimensione) {
-                    if($fileTypeMOBI == "MOBI") {
-                        $check_estensione = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!", "Il file deve essere un MOBI");
-                    }
-                }
-
-                if ($check_esistente && $check_dimensione && $check_estensione) {
-                    if (move_uploaded_file($_FILES["fileMOBI"]["tmp_name"], $fileMOBI)) {
-                        $check_spostamento = true;
-                    } else {
-                        TemplateHTML::ALERT("ATTENZIONE!","Impossibile copiare il MOBI");
-                    }
-                }
-
-                if(!$check_esistente || !$check_dimensione || !$check_estensione || !$check_spostamento) {
-                    $errors['fileMOBI'] = "Errore caricamento MOBI";
-                }
-            } // FINE CARICAMENTO MOBI
-
-        } // FINE OK DOPO STOREDB
+        }
     }
 
     if (!empty($errors)) {
