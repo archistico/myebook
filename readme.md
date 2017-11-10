@@ -2,7 +2,7 @@ MY EBOOK
 ========
 Il mio vecchio downloader di ebook  
   
-![Screeshot](https://github.com/archistico/myebook/img/screenshot_EbookTrovato.jpg?raw=true)  
+![Screeshot](https://github.com/archistico/myebook/blob/master/img/screenshot_EbookTrovato.jpg)  
   
 INFO
 ----
