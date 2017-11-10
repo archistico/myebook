@@ -1,7 +1,9 @@
 MY EBOOK
 ========
 Il mio vecchio downloader di ebook  
-
+  
+![Screeshot](https://github.com/archistico/myebook/img/screenshot_EbookTrovato.jpg?raw=true)  
+  
 INFO
 ----
 git clone https://www.github.com/archistico/myebook.git  
