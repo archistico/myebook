@@ -50,7 +50,10 @@ class Utilita {
     public static function PULISCISTRINGA($str){
         $str = str_replace("'", "''", $str);
         $str = str_replace("’", "''", $str);
-        $str = str_replace("\"", "", $str);
+        $str = str_replace("–", "-", $str);
+        $str = str_replace("“", "''", $str);
+        $str = str_replace("”", "''", $str);
+        $str = str_replace("\"", "''", $str);
         return trim($str);
     }
 

@@ -383,7 +383,6 @@ class TemplateHTML {
             <tr>
               <th>Titolo</th>
               <th>Autore</th>
-              <th class='hidden-xs hidden-sm'>ISBN</th>
               <th>Prezzo</th>
               <th class='hidden-xs hidden-sm'>Nome file</th>
               <th class='hidden-xs hidden-sm'>#</th>
@@ -395,9 +394,8 @@ class TemplateHTML {
 
         foreach ($libri as $lib) {
             echo "<tr>";
-            echo " <td>$lib->casaeditrice - $lib->titolo</td>";
+            echo " <td>$lib->titolo</td>";
             echo " <td>$lib->autore</td>";
-            echo " <td>$lib->isbn</td>";
             echo " <td>&euro; $lib->prezzo</td>";
             echo " <td>$lib->nomefile</td>";
             echo " <td><a href='admin_libri_elimina.php?id=$lib->id&ok=0'><i class='fa fa-times fa-lg rosso' aria-hidden='true'></i></a></td>";

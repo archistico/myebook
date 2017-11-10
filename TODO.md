@@ -1,6 +1,6 @@
 # TODO
   
-#### Generale:    
+#### Generale    
 + verifica nella lista se i file sono presenti
 + cambiare e verificare codici
 + nella pagina download controllare quali file sono disponibili e pulsante
@@ -9,14 +9,19 @@
 + stampa errori come foreach sull'array errors
 + formID
   
-#### Codici:
+#### Codici
 + modifica
 + controllare come viene calcolato
   
-#### Libri:
+#### Libri
 + modifica
 + cancellare
 + cancellare anche file sul server
 
+#### Pagina iniziale  
++ Immagini cartella codice di spiegazione  
+
 #### Da studiare
-+ http://php.net/manual/en/function.hexdec.php
++ http://php.net/manual/en/function.hexdec.php  
+  
+  
