@@ -22,4 +22,5 @@ for($c=$min_codici; $c < $max_codici; $c++) {
     $codici[] = $cod->getCodice();
 }
 
+Utilita::WRITELINE("OK: ".($max_codici-$min_codici). " codici creati senza sovrapposizione" );
 
