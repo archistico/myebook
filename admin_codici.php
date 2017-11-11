@@ -29,7 +29,7 @@ if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['fo
     if (empty($_POST['denominazione'])) {
         $errors['denominazione'] = 'denominazione non passato';
     } else {
-        $denominazione = str_replace("'", "''",$_POST['denominazione']);
+        $denominazione = Utilita::PULISCISTRINGA($_POST['denominazione']);
     }
 
     if (empty($errors)) {
@@ -67,7 +67,7 @@ if (!empty($_POST['librofk']) && (isset($_POST['formid']) && isset($_SESSION['fo
             $db->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
 
             $sql = "INSERT INTO codice (codiceid, denominazione, codice, librofk, download) 
-                    VALUES (NULL, '$denominazione', '" . $codice->getCodice() . "', '$librofk', '$download');";
+                    VALUES (NULL, '".html2db($denominazione)."', '" . $codice->getCodice() . "', '$librofk', '$download');";
 
             $db->exec($sql);
             //echo $sql."<br>";

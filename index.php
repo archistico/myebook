@@ -30,7 +30,6 @@ if (!empty($_POST['codice'])) {
         if($codice->getLibroByCodice($codiceInserito)) {
             TemplateHTML::DOWNLOAD_EBOOK($codice);
 
-
             TemplateHTML::HEADER("Cerca un'altro ebook");
             TemplateHTML::FORM_CERCA_CODICE();
             TemplateHTML::INFORMAZIONI();
