@@ -84,4 +84,8 @@ class Utilita {
             echo "Errore nel loggin<br>";
         }
     }
+
+    public static function WRITELINE($str){
+        echo $str."<br>";
+    }
 }
